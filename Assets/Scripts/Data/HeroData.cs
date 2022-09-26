@@ -3,9 +3,10 @@
 [Serializable]
 public class HeroData
 {
+    public string Name;
     public int Initiative;
     public int ActionDiameter;
-    public int Laziness;
+    public int Enthusiasm;
     public int Search;
     public int Speed;
     public int Collection;
