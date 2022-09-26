@@ -20,7 +20,7 @@ namespace Ui.Factory
 
         public SetupUi CreateSetupUi()
         {
-            return Object.Instantiate(_prefabs.SetupUi);
+            return Object.Instantiate(_prefabs.SetupUi, _uiRoot);
         }
     }
 }
