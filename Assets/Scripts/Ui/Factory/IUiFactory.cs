@@ -2,6 +2,7 @@
 {
     public interface IUiFactory
     {
-        
+        void CreateUiRoot();
+        SetupUi CreateSetupUi();
     }
 }

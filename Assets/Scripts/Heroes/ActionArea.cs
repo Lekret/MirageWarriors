@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Hero
+namespace Heroes
 {
     public class ActionArea : MonoBehaviour
     {

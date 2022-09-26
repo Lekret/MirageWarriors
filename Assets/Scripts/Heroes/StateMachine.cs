@@ -1,4 +1,4 @@
-﻿namespace Hero
+﻿namespace Heroes
 {
     public class StateMachine
     {

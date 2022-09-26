@@ -1,7 +1,7 @@
-﻿using Data;
+﻿using StaticData;
 using UnityEngine;
 
-namespace Hero
+namespace Heroes
 {
     public class Hero : MonoBehaviour
     {
