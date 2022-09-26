@@ -1,6 +1,8 @@
-﻿namespace GameField
+﻿using UnityEngine;
+
+namespace GameField
 {
-    public class GameField
+    public class GameField : MonoBehaviour
     {
         
     }
