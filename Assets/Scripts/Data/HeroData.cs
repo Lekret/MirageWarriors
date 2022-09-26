@@ -13,5 +13,5 @@ public class HeroData
     public int DamagePerTurn;
     public int Shield;
     public int Health;
-    public int Ptsd;
+    public int Cooldown;
 }
