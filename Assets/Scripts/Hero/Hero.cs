@@ -5,11 +5,11 @@ namespace Hero
 {
     public class Hero : MonoBehaviour
     {
-        [SerializeField] private CircleCollider2D _actionArea;
+        [SerializeField] private ActionArea _actionArea;
 
         public void Init(HeroData data)
         {
-            _actionArea.radius = data.ActionDiameter / 2f;
+            _actionArea.SetDiameter(data.ActionDiameter);
         }
     }
 }
