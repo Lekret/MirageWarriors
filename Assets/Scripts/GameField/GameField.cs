@@ -1,4 +1,7 @@
-﻿public class GameField
+﻿namespace GameField
 {
+    public class GameField
+    {
         
+    }
 }

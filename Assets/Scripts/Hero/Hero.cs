@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class Hero : MonoBehaviour
+namespace Hero
 {
+    public class Hero : MonoBehaviour
+    {
     
+    }
 }

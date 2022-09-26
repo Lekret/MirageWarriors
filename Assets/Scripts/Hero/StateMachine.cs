@@ -1,4 +1,7 @@
-﻿public class StateMachine
+﻿namespace Hero
 {
+    public class StateMachine
+    {
         
+    }
 }

@@ -1,4 +1,7 @@
-﻿public class Character
+﻿namespace Hero
 {
+    public class Character
+    {
     
+    }
 }
