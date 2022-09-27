@@ -1,4 +1,5 @@
-﻿using StaticData;
+﻿using Services.CameraProvider;
+using StaticData;
 using UnityEngine;
 
 namespace Ui.Factory
@@ -6,11 +7,13 @@ namespace Ui.Factory
     public class UiFactory : IUiFactory
     {
         private readonly Prefabs _prefabs;
+        private readonly ICameraProvider _cameraProvider;
         private Transform _uiRoot;
 
-        public UiFactory(Prefabs prefabs)
+        public UiFactory(Prefabs prefabs, ICameraProvider cameraProvider)
         {
             _prefabs = prefabs;
+            _cameraProvider = cameraProvider;
         }
 
         public void CreateUiRoot()
