@@ -17,9 +17,9 @@ namespace Services.HeroRaycaster
         {
             var camera = _cameraProvider.GetCamera();
             var ray = camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit))
+            var hit = Physics2D.GetRayIntersection(ray);
+            if (hit)
             {
-                Debug.LogError("Object; " + hit.transform.name, hit.transform);
                 return hit.transform.TryGetComponent(out hero);
             }
             hero = null;
