@@ -15,3 +15,5 @@ MonoBehaviour:
   _hero: {fileID: 4618285736584051127, guid: 033ad1d654bd7a24fad6c99b206614fb, type: 3}
   _uiRoot: {fileID: 2501461281047324725, guid: 49bb4854f6d6b3842973e5f6056eb4fb, type: 3}
   _setupUi: {fileID: 318609290925447933, guid: 5fdd86d289f99164aa7e3c047649f662, type: 3}
+  _heroInfo: {fileID: 2531829149972776549, guid: 13dfe4eb596a5eb44badf487ae2d5cbe,
+    type: 3}
