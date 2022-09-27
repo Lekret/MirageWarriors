@@ -14,7 +14,7 @@ namespace StateMachine
         private readonly IHeroFactory _heroFactory;
         private readonly IHeroStorage _heroStorage;
         private readonly GameSettings _gameSettings;
-        private readonly List<Object> _uiControls = new List<Object>();
+        private readonly List<GameObject> _uiControls = new List<GameObject>();
         private SetupUi _setupUi;
         private HeroInfo _heroInfo;
 
@@ -59,8 +59,8 @@ namespace StateMachine
         private void CreateSetupUi()
         {
             _uiFactory.CreateUiRoot();
-            _uiControls.Add(_uiFactory.CreateSetup());
-            _uiControls.Add(_uiFactory.CreateHeroInfo());
+            _uiControls.Add(_uiFactory.CreateSetup().gameObject);
+            _uiControls.Add(_uiFactory.CreateHeroInfo().gameObject);
         }
 
         private void DeleteSetupUi()
