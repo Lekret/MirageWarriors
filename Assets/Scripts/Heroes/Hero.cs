@@ -8,6 +8,9 @@ namespace Heroes
     public class Hero : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
         [SerializeField] private ActionArea _actionArea;
+
+        public event Action<PointerEventData> Clicked;
+        public event Action<PointerEventData> Dragged;
         
         public void Init(HeroData data)
         {
@@ -16,12 +19,12 @@ namespace Heroes
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.LogError("Clicked omg!");
+            Clicked?.Invoke(eventData);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            transform.position = eventData.position;
+            Dragged?.Invoke(eventData);
         }
     }
 }

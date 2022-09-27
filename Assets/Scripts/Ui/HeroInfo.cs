@@ -17,8 +17,14 @@ namespace Ui
         [SerializeField] private TextMeshProUGUI _health;
         [SerializeField] private TextMeshProUGUI _cooldown;
 
+        private void Awake()
+        {
+            Hide();
+        }
+
         public void SetData(HeroData data)
         {
+            gameObject.SetActive(true);
             _initiative.text = $"Initiative: {data.Initiative}";
             _actionDiameter.text = $"Action diameter: {data.ActionDiameter}";
             _enthusiasm.text = $"Enthusiasm: {data.Enthusiasm}";
@@ -29,6 +35,11 @@ namespace Ui
             _shield.text = $"Shield: {data.Shield}";
             _health.text = $"Health: {data.Health}";
             _cooldown.text = $"Cooldown: {data.Cooldown}";
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
