@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace StateMachine
 {
-    public class GameStateMachine
+    public class GameStateMachine : IGameStateMachine
     {
         private readonly Dictionary<Type, IState> _states = new Dictionary<Type, IState>();
         private IState _current;
