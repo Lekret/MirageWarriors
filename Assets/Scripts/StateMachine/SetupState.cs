@@ -2,7 +2,7 @@
 using Ui.Factory;
 using UnityEngine;
 
-namespace Infrastructure.StateMachine
+namespace StateMachine
 {
     public class SetupState : IEnterState, IExitState
     {
@@ -16,6 +16,7 @@ namespace Infrastructure.StateMachine
 
         public void Enter()
         {
+            _uiFactory.CreateUiRoot();
             _setupUi = _uiFactory.CreateSetupUi();
         }
 

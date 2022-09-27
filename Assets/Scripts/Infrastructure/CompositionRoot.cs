@@ -1,5 +1,5 @@
-﻿using Infrastructure.StateMachine;
-using Services.SceneLoader;
+﻿using Services.SceneLoader;
+using StateMachine;
 using StaticData;
 using Ui.Factory;
 using UnityEngine;

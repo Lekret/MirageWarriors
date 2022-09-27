@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.StateMachine
+﻿namespace StateMachine
 {
     public interface IState
     {
