@@ -7,10 +7,12 @@ namespace StateMachine
     public class SetupState : IEnterState, IExitState
     {
         private readonly IUiFactory _uiFactory;
+        private readonly GameStateMachine _gameStateMachine;
         private SetupUi _setupUi;
 
-        public SetupState(IUiFactory uiFactory)
+        public SetupState(GameStateMachine gameStateMachine, IUiFactory uiFactory)
         {
+            _gameStateMachine = gameStateMachine;
             _uiFactory = uiFactory;
         }
 
@@ -18,11 +20,17 @@ namespace StateMachine
         {
             _uiFactory.CreateUiRoot();
             _setupUi = _uiFactory.CreateSetupUi();
+            _setupUi.StartPressed += OnStartPressed;
         }
-
+        
         public void Exit()
         {
-            Object.Destroy(_setupUi);
+            _setupUi.StartPressed -= OnStartPressed;
+        }
+
+        private void OnStartPressed()
+        {
+            _gameStateMachine.Enter<GameState>();
         }
     }
 }

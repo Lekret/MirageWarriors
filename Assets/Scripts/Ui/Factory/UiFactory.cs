@@ -21,7 +21,8 @@ namespace Ui.Factory
 
         public SetupUi CreateSetupUi()
         {
-            return Object.Instantiate(_prefabs.SetupUi, _uiRoot);
+            var setupUi = Object.Instantiate(_prefabs.SetupUi, _uiRoot);
+            return setupUi;
         }
     }
 }

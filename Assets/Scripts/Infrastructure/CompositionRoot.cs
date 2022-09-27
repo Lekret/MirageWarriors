@@ -17,12 +17,17 @@ namespace Infrastructure
         private void Awake()
         {
             DontDestroyOnLoad(this);
-            var uiFactory = new UiFactory(Configuration.Prefabs);
             _sceneLoader = new SceneLoader(this);
-            _stateMachine = new GameStateMachine()
-                .AddState(new SetupState(uiFactory))
-                .AddState(new GameState())
-                .AddState(new ResultState());
+            _stateMachine = new GameStateMachine();
+            var uiFactory = new UiFactory(Configuration.Prefabs);
+            var setupState = new SetupState(_stateMachine, uiFactory);
+            var gameState = new GameState();
+            var resultState = new ResultState();
+            _stateMachine
+                .AddState(setupState)
+                .AddState(gameState)
+                .AddState(resultState);
+            
             _sceneLoader.Load("Game", () =>
             {
                 _stateMachine.Enter<SetupState>();
