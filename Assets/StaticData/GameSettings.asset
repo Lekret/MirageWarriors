@@ -16,3 +16,85 @@ MonoBehaviour:
   _mapHeight: 1200
   _mirageCount: 1000
   _heroSwitchCount: 4
+  _playerTeam:
+  - Initiative: 10
+    ActionDiameter: 100
+    Enthusiasm: 7800
+    Search: 500
+    Speed: 100
+    Collection: 20
+    Damage: 100
+    Shield: 500
+    Health: 500
+    Cooldown: 4
+  - Initiative: 10
+    ActionDiameter: 100
+    Enthusiasm: 7800
+    Search: 500
+    Speed: 100
+    Collection: 20
+    Damage: 100
+    Shield: 500
+    Health: 500
+    Cooldown: 4
+  - Initiative: 10
+    ActionDiameter: 100
+    Enthusiasm: 7800
+    Search: 500
+    Speed: 100
+    Collection: 20
+    Damage: 100
+    Shield: 500
+    Health: 500
+    Cooldown: 4
+  - Initiative: 10
+    ActionDiameter: 100
+    Enthusiasm: 7800
+    Search: 500
+    Speed: 100
+    Collection: 20
+    Damage: 100
+    Shield: 500
+    Health: 500
+    Cooldown: 4
+  _enemyTeam:
+  - Initiative: 10
+    ActionDiameter: 100
+    Enthusiasm: 7800
+    Search: 500
+    Speed: 100
+    Collection: 20
+    Damage: 100
+    Shield: 500
+    Health: 500
+    Cooldown: 4
+  - Initiative: 10
+    ActionDiameter: 100
+    Enthusiasm: 7800
+    Search: 500
+    Speed: 100
+    Collection: 20
+    Damage: 100
+    Shield: 500
+    Health: 500
+    Cooldown: 4
+  - Initiative: 10
+    ActionDiameter: 100
+    Enthusiasm: 7800
+    Search: 500
+    Speed: 100
+    Collection: 20
+    Damage: 100
+    Shield: 500
+    Health: 500
+    Cooldown: 4
+  - Initiative: 10
+    ActionDiameter: 100
+    Enthusiasm: 7800
+    Search: 500
+    Speed: 100
+    Collection: 20
+    Damage: 100
+    Shield: 500
+    Health: 500
+    Cooldown: 4
