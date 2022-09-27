@@ -1,7 +1,9 @@
-﻿namespace Services.SceneLoader
+﻿using System;
+
+namespace Services.SceneLoader
 {
     public interface ISceneLoader
     {
-        void Load(string sceneName);
+        void Load(string sceneName, Action onLoaded = null);
     }
 }
