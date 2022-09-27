@@ -1,7 +1,5 @@
-﻿using System;
-using Services.CameraProvider;
+﻿using Services.CameraProvider;
 using Services.CoroutineRunner;
-using Services.HeroRaycaster;
 using Services.SceneLoader;
 using StateMachine;
 using StaticData;
@@ -22,10 +20,9 @@ namespace Infrastructure
             _sceneLoader = new SceneLoader(this);
             _stateMachine = new GameStateMachine();
             var cameraProvider = new MainCameraProvider();
-            var heroRaycaster = new HeroRaycaster(cameraProvider);
             var uiFactory = new UiFactory(Configuration.Prefabs, cameraProvider);
-            var setupState = new SetupState(_stateMachine, uiFactory, heroRaycaster);
-            var gameState = new GameState(heroRaycaster);
+            var setupState = new SetupState(_stateMachine, uiFactory);
+            var gameState = new GameState();
             var resultState = new ResultState();
             _stateMachine
                 .AddState(setupState)

@@ -10,9 +10,11 @@ namespace StaticData
         [SerializeField] private Hero _hero;
         [SerializeField] private GameObject _uiRoot;
         [SerializeField] private SetupUi _setupUi;
+        [SerializeField] private HeroInfo _heroInfo;
 
         public Hero Hero => _hero;
         public GameObject UiRoot => _uiRoot;
         public SetupUi SetupUi => _setupUi;
+        public HeroInfo HeroInfo => _heroInfo;
     }
 }

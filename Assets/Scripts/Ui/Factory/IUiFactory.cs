@@ -3,6 +3,7 @@
     public interface IUiFactory
     {
         void CreateUiRoot();
-        SetupUi CreateSetupUi();
+        HeroInfo CreateHeroInfo();
+        SetupUi CreateSetup();
     }
 }

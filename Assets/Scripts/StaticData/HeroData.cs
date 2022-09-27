@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace StaticData
@@ -15,7 +16,6 @@ namespace StaticData
         public int Speed;
         public int Collection;
         public int Damage;
-        public int DamagePerTurn;
         public int Shield;
         public int Health;
         public int Cooldown;

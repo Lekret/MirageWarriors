@@ -1,32 +1,29 @@
-﻿using Heroes;
-using Services.HeroRaycaster;
+﻿using Ui.Factory;
 using Ui;
-using Ui.Factory;
 using UnityEngine;
 
 namespace StateMachine
 {
-    public class SetupState : IEnterState, ITickState, IExitState
+    public class SetupState : IEnterState, IExitState
     {
         private readonly IUiFactory _uiFactory;
         private readonly IGameStateMachine _gameStateMachine;
-        private readonly IHeroRaycaster _heroRaycaster;
         private SetupUi _setupUi;
+        private HeroInfo _heroInfo;
 
         public SetupState(
             IGameStateMachine gameStateMachine, 
-            IUiFactory uiFactory,
-            IHeroRaycaster heroRaycaster)
+            IUiFactory uiFactory)
         {
             _gameStateMachine = gameStateMachine;
             _uiFactory = uiFactory;
-            _heroRaycaster = heroRaycaster;
         }
 
         public void Enter()
         {
             _uiFactory.CreateUiRoot();
-            _setupUi = _uiFactory.CreateSetupUi();
+            _setupUi = _uiFactory.CreateSetup();
+            _heroInfo = _uiFactory.CreateHeroInfo();
             _setupUi.StartPressed += OnStartPressed;
         }
         
@@ -35,16 +32,10 @@ namespace StateMachine
             _setupUi.StartPressed -= OnStartPressed;
         }
 
-        public void Tick()
-        {
-            if (_heroRaycaster.TryRaycast(out var hero))
-            {
-                Debug.LogError("Hero found!");
-            }
-        }
-        
         private void OnStartPressed()
         {
+            Object.Destroy(_setupUi);
+            Object.Destroy(_heroInfo);
             _gameStateMachine.Enter<GameState>();
         }
     }

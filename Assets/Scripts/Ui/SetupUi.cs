@@ -23,7 +23,6 @@ namespace Ui
         private void BeginBattle()
         {
             StartPressed?.Invoke();
-            Destroy(gameObject);
         }
     }
 }

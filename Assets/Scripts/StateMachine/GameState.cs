@@ -1,12 +1,7 @@
-﻿using Services.HeroRaycaster;
-
-namespace StateMachine
+﻿namespace StateMachine
 {
     public class GameState : IState
     {
-        public GameState(IHeroRaycaster heroRaycaster)
-        {
-            
-        }
+        
     }
 }

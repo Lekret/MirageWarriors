@@ -19,10 +19,17 @@ namespace Ui.Factory
         public void CreateUiRoot()
         {
             _uiRoot = Object.Instantiate(_prefabs.UiRoot).transform;
-            _uiRoot.GetComponent<Canvas>().worldCamera = Camera.main;
+            var canvas = _uiRoot.GetComponent<Canvas>();
+            canvas.worldCamera = _cameraProvider.GetCamera();
         }
 
-        public SetupUi CreateSetupUi()
+        public HeroInfo CreateHeroInfo()
+        {
+            var heroInfo = Object.Instantiate(_prefabs.HeroInfo, _uiRoot);
+            return heroInfo;
+        }
+
+        public SetupUi CreateSetup()
         {
             var setupUi = Object.Instantiate(_prefabs.SetupUi, _uiRoot);
             return setupUi;
