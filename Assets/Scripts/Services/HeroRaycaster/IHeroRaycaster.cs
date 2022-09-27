@@ -4,6 +4,6 @@ namespace Services.HeroRaycaster
 {
     public interface IHeroRaycaster
     {
-        bool TryGet(out Hero hero);
+        bool TryRaycast(out Hero hero);
     }
 }

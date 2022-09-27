@@ -37,7 +37,7 @@ namespace StateMachine
 
         public void Tick()
         {
-            if (_heroRaycaster.TryGet(out var hero))
+            if (_heroRaycaster.TryRaycast(out var hero))
             {
                 Debug.LogError("Hero found!");
             }

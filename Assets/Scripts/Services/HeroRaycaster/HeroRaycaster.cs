@@ -13,7 +13,7 @@ namespace Services.HeroRaycaster
             _cameraProvider = cameraProvider;
         }
 
-        public bool TryGet(out Hero hero)
+        public bool TryRaycast(out Hero hero)
         {
             var camera = _cameraProvider.GetCamera();
             var ray = camera.ScreenPointToRay(Input.mousePosition);
