@@ -33,12 +33,12 @@ namespace StateMachine
         public void Enter()
         {
             SpawnHeroes();
-            CreateUi();
+            CreateSetupUi();
         }
         
         public void Exit()
         {
-            DeleteUi();
+            DeleteSetupUi();
         }
         
         private void SpawnHeroes()
@@ -56,14 +56,14 @@ namespace StateMachine
             }
         }
 
-        private void CreateUi()
+        private void CreateSetupUi()
         {
             _uiFactory.CreateUiRoot();
             _uiControls.Add(_uiFactory.CreateSetup());
             _uiControls.Add(_uiFactory.CreateHeroInfo());
         }
 
-        private void DeleteUi()
+        private void DeleteSetupUi()
         {
             foreach (var control in _uiControls)
             {
