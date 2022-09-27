@@ -16,6 +16,7 @@ namespace Ui.Factory
         public void CreateUiRoot()
         {
             _uiRoot = Object.Instantiate(_prefabs.UiRoot).transform;
+            _uiRoot.GetComponent<Canvas>().worldCamera = Camera.main;
         }
 
         public SetupUi CreateSetupUi()
