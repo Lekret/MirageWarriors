@@ -7,8 +7,6 @@ namespace StaticData
     [Serializable]
     public class HeroData
     {
-        public string Name;
-        public Sprite Icon;
         public int Initiative;
         public int ActionDiameter;
         public int Enthusiasm;
