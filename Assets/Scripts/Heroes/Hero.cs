@@ -5,26 +5,37 @@ using UnityEngine.EventSystems;
 
 namespace Heroes
 {
-    public class Hero : MonoBehaviour, IPointerClickHandler, IDragHandler
+    public class Hero : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] private ActionArea _actionArea;
 
-        public event Action<PointerEventData> Clicked;
-        public event Action<PointerEventData> Dragged;
-        
-        public void Init(HeroData data)
+        public bool IsPlayer { get; private set; }
+        public HeroData Data { get; private set; }
+
+        public event Action<Hero> PointerEntered;
+        public event Action<Hero> PointerExited; 
+        public event Action<Hero> PointerClicked;
+
+        public void Init(HeroData data, bool isPlayer)
         {
+            Data = data;
+            IsPlayer = isPlayer;
             _actionArea.SetDiameter(data.ActionDiameter);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
-            Clicked?.Invoke(eventData);
+            PointerEntered?.Invoke(this);
         }
 
-        public void OnDrag(PointerEventData eventData)
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
-            Dragged?.Invoke(eventData);
+            PointerExited?.Invoke(this);
+        }
+
+        void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+        {
+            PointerClicked?.Invoke(this);
         }
     }
 }

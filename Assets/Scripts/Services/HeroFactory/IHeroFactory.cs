@@ -5,6 +5,6 @@ namespace Services.HeroFactory
 {
     public interface IHeroFactory
     {
-        Hero CreateHero(HeroData data);
+        Hero CreateHero(HeroData data, bool isPlayer);
     }
 }

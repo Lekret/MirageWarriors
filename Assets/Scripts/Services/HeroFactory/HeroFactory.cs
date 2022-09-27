@@ -13,9 +13,10 @@ namespace Services.HeroFactory
             _prefabs = prefabs;
         }
 
-        public Hero CreateHero(HeroData data)
+        public Hero CreateHero(HeroData data, bool isPlayer)
         {
             var hero = Object.Instantiate(_prefabs.Hero);
+            hero.Init(data, isPlayer);
             return hero;
         }
     }

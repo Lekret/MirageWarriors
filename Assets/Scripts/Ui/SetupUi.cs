@@ -1,4 +1,4 @@
-﻿using System;
+﻿using StateMachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +8,13 @@ namespace Ui
     {
         [SerializeField] private Button _start;
 
-        public event Action StartPressed;
-        
+        private IGameStateMachine _gameStateMachine;
+
+        public void Init(IGameStateMachine gameStateMachine)
+        {
+            _gameStateMachine = gameStateMachine;
+        }
+
         private void Awake()
         {
             _start.onClick.AddListener(BeginBattle);
@@ -22,7 +27,7 @@ namespace Ui
         
         private void BeginBattle()
         {
-            StartPressed?.Invoke();
+            _gameStateMachine.Enter<GameState>();
         }
     }
 }

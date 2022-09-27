@@ -1,5 +1,7 @@
 ﻿using Services.CameraProvider;
 using Services.CoroutineRunner;
+using Services.HeroFactory;
+using Services.HeroStorage;
 using Services.SceneLoader;
 using StateMachine;
 using StaticData;
@@ -17,11 +19,23 @@ namespace Infrastructure
         private void Awake()
         {
             DontDestroyOnLoad(this);
+            var prefabs = Configuration.Prefabs;
+            var gameSettings = Configuration.GameSettings;
             _sceneLoader = new SceneLoader(this);
             _stateMachine = new GameStateMachine();
             var cameraProvider = new MainCameraProvider();
-            var uiFactory = new UiFactory(Configuration.Prefabs, cameraProvider);
-            var setupState = new SetupState(_stateMachine, uiFactory);
+            var heroStorage = new HeroStorage();
+            var uiFactory = new UiFactory(
+                prefabs,
+                cameraProvider, 
+                heroStorage, 
+                _stateMachine);
+            var heroFactory = new HeroFactory(prefabs);
+            var setupState = new SetupState(
+                uiFactory,
+                heroFactory,
+                heroStorage,
+                gameSettings);
             var gameState = new GameState();
             var resultState = new ResultState();
             _stateMachine
