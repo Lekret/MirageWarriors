@@ -27,8 +27,8 @@ namespace Infrastructure
             _stateMachine = new GameStateMachine();
             var cameraProvider = new MainCameraProvider();
             var mapProvider = new MapProvider();
-            var btFactory = new BtFactory(mapProvider);
             var heroStorage = new HeroStorage();
+            var btFactory = new BtFactory(mapProvider, heroStorage);
             var uiFactory = new UiFactory(
                 prefabs,
                 cameraProvider, 

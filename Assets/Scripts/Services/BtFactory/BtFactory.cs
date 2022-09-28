@@ -1,6 +1,7 @@
 ﻿using CleverCrow.Fluid.BTs.Trees;
 using Heroes;
 using Heroes.BtActions;
+using Services.HeroStorage;
 using Services.MapProvider;
 
 namespace Services.BtFactory
@@ -8,10 +9,12 @@ namespace Services.BtFactory
     public class BtFactory : IBtFactory
     {
         private readonly IMapProvider _mapProvider;
+        private readonly IHeroStorage _heroStorage;
 
-        public BtFactory(IMapProvider mapProvider)
+        public BtFactory(IMapProvider mapProvider, IHeroStorage heroStorage)
         {
             _mapProvider = mapProvider;
+            _heroStorage = heroStorage;
         }
 
         public BehaviorTree Create(Hero hero)
@@ -30,6 +33,7 @@ namespace Services.BtFactory
         {
             builder
                 .Sequence()
+                    .AddNode(new EmpathAbility(hero, _heroStorage))
                     .AddNode(new IsInBattleState(hero))
                     .Selector()
                         .AddNode(new AttackEnemies(hero))
