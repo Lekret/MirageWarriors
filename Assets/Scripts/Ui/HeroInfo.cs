@@ -19,6 +19,7 @@ namespace Ui
         [SerializeField] private TextMeshProUGUI _shield;
         [SerializeField] private TextMeshProUGUI _health;
         [SerializeField] private TextMeshProUGUI _cooldown;
+        [SerializeField] private TextMeshProUGUI _character;
 
         private IEnumerable<HeroPreview> _previews;
         private HeroPreview _currentPreview;
@@ -71,6 +72,7 @@ namespace Ui
             _shield.text = $"Shield: {data.Shield}";
             _health.text = $"Health: {data.Health}";
             _cooldown.text = $"Cooldown: {data.Cooldown}";
+            _character.text = $"Character: {data.Character}";
         }
 
         private void Hide()
