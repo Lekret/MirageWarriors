@@ -3,7 +3,6 @@
     public enum Character
     {
         None,
-        Coward,
         Pacifist,
         Empath
     }
