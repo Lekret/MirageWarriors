@@ -15,7 +15,19 @@ namespace Heroes.BtActions
         {
             return _hero.State.IsAggressive ||
                    _hero.Data.Character != Character.Pacifist && 
-                   _hero.HasAggressiveEnemiesNear();
+                   HasAggressiveEnemiesNear();
+        }
+
+        private bool HasAggressiveEnemiesNear()
+        {
+            foreach (var other in _hero.NearestHeroes)
+            {
+                if (other.State.IsPlayer == _hero.State.IsPlayer) 
+                    continue;
+                if (other.State.IsAggressive) 
+                    return true;
+            }
+            return false;
         }
     }
 }

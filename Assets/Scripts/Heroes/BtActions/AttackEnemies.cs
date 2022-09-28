@@ -17,11 +17,13 @@ namespace Heroes.BtActions
 
         protected override TaskStatus OnUpdate()
         {
-            if (!_hero.HasAggressiveEnemiesNear()) 
+            var enemiesToAttack = GetEnemiesToAttack();
+            if (enemiesToAttack.Count == 0) 
                 return TaskStatus.Failure;
             
-            var enemiesToAttack = GetEnemiesToAttack();
             ApplyDamage(enemiesToAttack, _hero.Data.Damage);
+            _hero.State.Cooldown = _hero.Data.Cooldown;
+            _hero.State.IsAggressive = true;
             return TaskStatus.Success;
         }
 

@@ -31,18 +31,6 @@ namespace Heroes
         {
             _debugBt = bt;
         }
-        
-        public bool HasAggressiveEnemiesNear()
-        {
-            foreach (var hero in NearestHeroes)
-            {
-                if (hero.State.IsPlayer == State.IsPlayer) 
-                    continue;
-                if (hero.State.IsAggressive) 
-                    return true;
-            }
-            return false;
-        }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
