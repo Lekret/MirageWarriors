@@ -20,13 +20,29 @@ namespace Heroes
         public BehaviorTree Bt => _bt;
         public IEnumerable<Hero> NearestHeroes => _actionArea.NearestHeroes;
         public event Action<Hero> Clicked;
-        
+        public event Action<Hero> Died; 
+
         public void Init(HeroData data, bool isPlayer)
         {
             Data = data;
             State = new HeroState(data, isPlayer);
             _actionArea.SetDiameter(data.ActionDiameter);
             _renderer.color = isPlayer ? Color.green : Color.red;
+            State.HealthChanged += OnHealthChanged;
+        }
+
+        private void OnDestroy()
+        {
+            State.HealthChanged -= OnHealthChanged;
+        }
+        
+        private void OnHealthChanged()
+        {
+            if (State.Health > 0 || State.IsDead) 
+                return;
+            State.IsDead = true;
+            Died?.Invoke(this);
+            Destroy(gameObject);
         }
 
         public void SetBt(BehaviorTree bt)

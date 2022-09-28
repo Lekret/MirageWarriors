@@ -1,4 +1,5 @@
-﻿using StaticData;
+﻿using System;
+using StaticData;
 using UnityEngine;
 
 namespace Heroes
@@ -6,11 +7,13 @@ namespace Heroes
     public class HeroState
     {
         public bool IsPlayer { get; }
+        public bool IsDead { get; set; }
         public int Shield { get; private set; }
         public int Health { get; private set; }
         public float Cooldown { get; set; }
         public bool IsAggressive { get; set; }
         public Vector2? TargetPosition { get; set; }
+        public event Action HealthChanged;
 
         public HeroState(HeroData data, bool isPlayer)
         {
@@ -33,6 +36,7 @@ namespace Heroes
             }
 
             Health = Mathf.Max(Health - damage, 0);
+            HealthChanged?.Invoke();
         }
     }
 }

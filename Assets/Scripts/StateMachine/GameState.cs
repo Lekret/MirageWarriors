@@ -34,7 +34,7 @@ namespace StateMachine
             _heroSwitchCount = _gameSettings.HeroSwitchCount;
             foreach (var hero in _heroStorage.GetAll())
             {
-                hero.Clicked += OnSwitchHero;
+                hero.Clicked += SwitchHero;
             }
         }
 
@@ -44,6 +44,9 @@ namespace StateMachine
             {
                 var hero = _heroFactory.CreateHero(data.Data, data.IsPlayer, data.Position);
                 _heroStorage.Add(hero);
+                hero.Died += OnHeroDied;
+                if (hero.State.IsPlayer)
+                    hero.Clicked += SwitchHero;
             }
         }
         
@@ -51,13 +54,21 @@ namespace StateMachine
         {
             foreach (var hero in _heroStorage.GetAll())
             {
-                hero.Clicked -= OnSwitchHero;
+                hero.Died -= OnHeroDied;
+                if (hero.State.IsPlayer)
+                    hero.Clicked -= SwitchHero;
             }
         }
-
-        private void OnSwitchHero(Hero hero)
+        
+        private void OnHeroDied(Hero hero)
         {
-            if (_heroSwitchCount == 0)
+            hero.Died -= OnHeroDied;
+            _heroStorage.Remove(hero);
+        }
+        
+        private void SwitchHero(Hero hero)
+        {
+            if (_heroSwitchCount <= 0)
                 return;
             hero.State.IsAggressive = !hero.State.IsAggressive;
             _heroSwitchCount--;
