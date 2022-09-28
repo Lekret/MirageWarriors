@@ -10,6 +10,7 @@ namespace Heroes.BtActions
         public SetHeroPeaceful(Hero hero)
         {
             _hero = hero;
+            Name = nameof(SetHeroPeaceful);
         }
 
         protected override TaskStatus OnUpdate()

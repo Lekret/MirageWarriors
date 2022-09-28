@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using CleverCrow.Fluid.BTs.Tasks;
 using CleverCrow.Fluid.BTs.Tasks.Actions;
 
@@ -13,6 +12,7 @@ namespace Heroes.BtActions
         public AttackEnemies(Hero hero)
         {
             _hero = hero;
+            Name = nameof(AttackEnemies);
         }
 
         protected override TaskStatus OnUpdate()

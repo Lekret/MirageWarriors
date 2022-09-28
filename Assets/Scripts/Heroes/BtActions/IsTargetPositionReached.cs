@@ -10,6 +10,7 @@ namespace Heroes.BtActions
         public IsTargetPositionReached(Hero hero)
         {
             _hero = hero;
+            Name = nameof(IsTargetPositionReached);
         }
 
         protected override bool OnUpdate()

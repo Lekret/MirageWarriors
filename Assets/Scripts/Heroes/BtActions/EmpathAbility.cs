@@ -8,11 +8,12 @@ namespace Heroes.BtActions
     {
         private readonly Hero _hero;
         private readonly IHeroStorage _heroStorage;
-
+        
         public EmpathAbility(Hero hero, IHeroStorage heroStorage)
         {
             _hero = hero;
             _heroStorage = heroStorage;
+            Name = nameof(EmpathAbility);
         }
 
         protected override TaskStatus OnUpdate()

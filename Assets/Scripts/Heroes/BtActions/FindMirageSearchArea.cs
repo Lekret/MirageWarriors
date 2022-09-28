@@ -10,6 +10,7 @@ namespace Heroes.BtActions
         public FindMirageSearchArea(Hero hero)
         {
             _hero = hero;
+            Name = nameof(FindMirageSearchArea);
         }
 
         protected override TaskStatus OnUpdate()

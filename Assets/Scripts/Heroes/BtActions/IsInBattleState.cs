@@ -9,6 +9,7 @@ namespace Heroes.BtActions
         public IsInBattleState(Hero hero)
         {
             _hero = hero;
+            Name = nameof(IsInBattleState);
         }
 
         protected override bool OnUpdate()

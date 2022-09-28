@@ -11,6 +11,7 @@ namespace Heroes.BtActions
         public MoveToTargetPosition(Hero hero)
         {
             _hero = hero;
+            Name = nameof(MoveToTargetPosition);
         }
 
         protected override TaskStatus OnUpdate()

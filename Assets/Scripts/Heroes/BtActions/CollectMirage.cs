@@ -5,6 +5,11 @@ namespace Heroes.BtActions
 {
     public class CollectMirage : ActionBase
     {
+        public CollectMirage()
+        {
+            Name = nameof(CollectMirage);
+        }
+        
         protected override TaskStatus OnUpdate()
         {
             //TODO COLLECT MIRAGE

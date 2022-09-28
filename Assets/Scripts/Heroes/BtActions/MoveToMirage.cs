@@ -5,6 +5,11 @@ namespace Heroes.BtActions
 {
     public class MoveToMirage : ActionBase
     {
+        public MoveToMirage()
+        {
+            Name = nameof(MoveToMirage);
+        }
+        
         protected override TaskStatus OnUpdate()
         {
             //TODO MOVE TO MIRAGE

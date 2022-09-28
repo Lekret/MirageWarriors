@@ -1,6 +1,5 @@
 ﻿using CleverCrow.Fluid.BTs.Tasks;
 using CleverCrow.Fluid.BTs.Tasks.Actions;
-using GameMap;
 using Services.MapProvider;
 
 namespace Heroes.BtActions
@@ -14,6 +13,7 @@ namespace Heroes.BtActions
         {
             _hero = hero;
             _mapProvider = mapProvider;
+            Name = nameof(SetRandomTargetPosition);
         }
         
         protected override TaskStatus OnUpdate()

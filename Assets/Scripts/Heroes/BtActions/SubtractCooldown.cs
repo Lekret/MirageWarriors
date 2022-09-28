@@ -11,6 +11,7 @@ namespace Heroes.BtActions
         public SubtractCooldown(Hero hero)
         {
             _hero = hero;
+            Name = nameof(SubtractCooldown);
         }
 
         protected override TaskStatus OnUpdate()

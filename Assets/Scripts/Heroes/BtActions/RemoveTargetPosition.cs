@@ -10,6 +10,7 @@ namespace Heroes.BtActions
         public RemoveTargetPosition(Hero hero)
         {
             _hero = hero;
+            Name = nameof(RemoveTargetPosition);
         }
 
         protected override TaskStatus OnUpdate()

@@ -9,6 +9,7 @@ namespace Heroes.BtActions
         public HasCooldown(Hero hero)
         {
             _hero = hero;
+            Name = nameof(HasCooldown);
         }
 
         protected override bool OnUpdate()
