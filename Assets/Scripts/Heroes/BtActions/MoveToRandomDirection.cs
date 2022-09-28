@@ -14,7 +14,7 @@ namespace Heroes.BtActions
         
         protected override TaskStatus OnUpdate()
         {
-            // TODO RANDOM DIRECTION WHEN COOLDOWN
+            
             return TaskStatus.Success;
         }
     }

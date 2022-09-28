@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CleverCrow.Fluid.BTs.Trees;
 using StaticData;
 using UnityEngine;
@@ -10,11 +11,11 @@ namespace Heroes
     {
         [SerializeField] private ActionArea _actionArea;
         [SerializeField] private BehaviorTree _debugBt;
-
-        public bool IsPlayer { get; private set; }
+        
         public HeroData Data { get; private set; }
         public HeroState State { get; private set; }
-
+        public IEnumerable<Hero> NearestHeroes => _actionArea.NearestHeroes;
+        public BehaviorTree Bt => _debugBt;
         public event Action<Hero> PointerEntered;
         public event Action<Hero> PointerExited; 
         public event Action<Hero> PointerClicked;
@@ -22,14 +23,25 @@ namespace Heroes
         public void Init(HeroData data, bool isPlayer)
         {
             Data = data;
-            IsPlayer = isPlayer;
-            State = new HeroState(data);
+            State = new HeroState(data, isPlayer);
             _actionArea.SetDiameter(data.ActionDiameter);
         }
 
         public void SetBehaviorTree(BehaviorTree bt)
         {
             _debugBt = bt;
+        }
+        
+        public bool HasAggressiveEnemiesNear()
+        {
+            foreach (var hero in NearestHeroes)
+            {
+                if (hero.State.IsPlayer == State.IsPlayer) 
+                    continue;
+                if (hero.State.IsAggressive) 
+                    return true;
+            }
+            return false;
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)

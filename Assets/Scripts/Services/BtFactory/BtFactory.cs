@@ -1,5 +1,4 @@
-﻿using CleverCrow.Fluid.BTs.Tasks;
-using CleverCrow.Fluid.BTs.Trees;
+﻿using CleverCrow.Fluid.BTs.Trees;
 using Heroes;
 using Heroes.BtActions;
 
@@ -23,12 +22,9 @@ namespace Services.BtFactory
         {
             builder
                 .Sequence()
-                    .AddNode(new ShouldAttack(hero))
+                    .AddNode(new IsInBattleState(hero))
                     .Selector()
-                        .Sequence()
-                            .AddNode(new HasEnemiesInRange(hero))
-                            .AddNode(new AttackEnemies(hero))
-                        .End()
+                        .AddNode(new AttackEnemies(hero))
                         .Sequence()
                             .AddNode(new HasCooldown(hero))
                             .AddNode(new SubtractCooldown(hero))
@@ -59,6 +55,8 @@ namespace Services.BtFactory
                     .Sequence()
                         .AddNode(new FindMirageSearchArea(hero))
                         .AddNode(new MoveToTargetPosition(hero))
+                        .AddNode(new IsTargetPositionReached(hero))
+                        .AddNode(new RemoveTargetPosition(hero))
                     .End()
                 .End();
         }
