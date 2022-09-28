@@ -17,3 +17,5 @@ MonoBehaviour:
   _setupUi: {fileID: 318609290925447933, guid: 5fdd86d289f99164aa7e3c047649f662, type: 3}
   _heroInfo: {fileID: 2531829149972776549, guid: 13dfe4eb596a5eb44badf487ae2d5cbe,
     type: 3}
+  _progressUi: {fileID: 1688288177139132499, guid: d7c9e20ecfe098e4ea7682966cf025fa,
+    type: 3}

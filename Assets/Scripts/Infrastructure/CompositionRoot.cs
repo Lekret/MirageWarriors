@@ -4,6 +4,7 @@ using Services.CoroutineRunner;
 using Services.HeroFactory;
 using Services.HeroStorage;
 using Services.MapProvider;
+using Services.MirageService;
 using Services.SceneLoader;
 using StateMachine;
 using StaticData;
@@ -28,13 +29,15 @@ namespace Infrastructure
             var cameraProvider = new MainCameraProvider();
             var mapProvider = new MapProvider();
             var heroStorage = new HeroStorage();
+            var mirageService = new MirageService(gameSettings);
             var btFactory = new BtFactory(mapProvider, heroStorage);
             var uiFactory = new UiFactory(
                 prefabs,
                 gameSettings,
                 cameraProvider, 
                 _stateMachine,
-                mapProvider);
+                mapProvider,
+                mirageService);
             var heroFactory = new HeroFactory(prefabs, btFactory);
             var setupState = new SetupState(uiFactory);
             var gameState = new GameState(

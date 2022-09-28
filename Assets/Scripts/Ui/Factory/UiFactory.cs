@@ -2,6 +2,7 @@
 using Heroes;
 using Services.CameraProvider;
 using Services.MapProvider;
+using Services.MirageService;
 using StateMachine;
 using StaticData;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Ui.Factory
         private readonly ICameraProvider _cameraProvider;
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IMapProvider _mapProvider;
+        private readonly IMirageService _mirageService;
         private Transform _uiRoot;
 
         public UiFactory(
@@ -22,18 +24,27 @@ namespace Ui.Factory
             GameSettings gameSettings,
             ICameraProvider cameraProvider, 
             IGameStateMachine gameStateMachine,
-            IMapProvider mapProvider)
+            IMapProvider mapProvider,
+            IMirageService mirageService)
         {
             _prefabs = prefabs;
             _cameraProvider = cameraProvider;
             _gameStateMachine = gameStateMachine;
             _mapProvider = mapProvider;
+            _mirageService = mirageService;
             _gameSettings = gameSettings;
         }
 
         public void CreateUiRoot()
         {
             _uiRoot = Object.Instantiate(_prefabs.UiRoot).transform;
+        }
+
+        public ProgressUi CreateProgress()
+        {
+            var progressUi = Object.Instantiate(_prefabs.ProgressUi);
+            progressUi.Init(_mirageService);
+            return progressUi;
         }
 
         public HeroInfo CreateHeroInfo(IEnumerable<HeroPreview> previews)
