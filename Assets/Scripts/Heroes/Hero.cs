@@ -10,6 +10,7 @@ namespace Heroes
     public class Hero : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] private ActionArea _actionArea;
+        [Tooltip("Field is exposed for tree debugger")]
         [SerializeField] private BehaviorTree _bt;
         
         public HeroData Data { get; private set; }
@@ -32,19 +33,10 @@ namespace Heroes
             _bt = bt;
         }
 
-        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-        {
-            PointerEntered?.Invoke(this);
-        }
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => PointerEntered?.Invoke(this);
 
-        void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
-        {
-            PointerExited?.Invoke(this);
-        }
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => PointerExited?.Invoke(this);
 
-        void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
-        {
-            PointerClicked?.Invoke(this);
-        }
+        void IPointerClickHandler.OnPointerClick(PointerEventData eventData) => PointerClicked?.Invoke(this);
     }
 }
