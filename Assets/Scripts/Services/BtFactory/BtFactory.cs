@@ -25,7 +25,7 @@ namespace Services.BtFactory
             AddPeaceful(builder, hero);
             builder.End();
             var bt = builder.Build();
-            hero.SetBehaviorTree(bt);
+            hero.SetBt(bt);
             return bt;
         }
 

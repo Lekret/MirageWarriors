@@ -10,12 +10,12 @@ namespace Heroes
     public class Hero : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] private ActionArea _actionArea;
-        [SerializeField] private BehaviorTree _debugBt;
+        [SerializeField] private BehaviorTree _bt;
         
         public HeroData Data { get; private set; }
         public HeroState State { get; private set; }
         public IEnumerable<Hero> NearestHeroes => _actionArea.NearestHeroes;
-        public BehaviorTree Bt => _debugBt;
+        public BehaviorTree Bt => _bt;
         public event Action<Hero> PointerEntered;
         public event Action<Hero> PointerExited; 
         public event Action<Hero> PointerClicked;
@@ -27,9 +27,9 @@ namespace Heroes
             _actionArea.SetDiameter(data.ActionDiameter);
         }
 
-        public void SetBehaviorTree(BehaviorTree bt)
+        public void SetBt(BehaviorTree bt)
         {
-            _debugBt = bt;
+            _bt = bt;
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)

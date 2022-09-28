@@ -34,7 +34,7 @@ namespace Infrastructure
                 cameraProvider, 
                 heroStorage, 
                 _stateMachine);
-            var heroFactory = new HeroFactory(prefabs);
+            var heroFactory = new HeroFactory(prefabs, btFactory);
             var setupState = new SetupState(
                 uiFactory,
                 heroFactory,
