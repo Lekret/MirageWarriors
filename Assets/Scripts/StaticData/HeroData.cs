@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Heroes;
 using UnityEngine;
 
 namespace StaticData
@@ -17,5 +18,6 @@ namespace StaticData
         public int Shield = 500;
         public int Health = 500;
         public int Cooldown = 4;
+        public Character Character;
     }
 }
