@@ -7,6 +7,7 @@ namespace Heroes
 {
     public class HeroPreview : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler
     {
+        public bool IsPlayer { get; set; }
         public HeroData Data { get; set; }
         public event Action<HeroPreview> PointerEntered;
         public event Action<HeroPreview> PointerExited;
@@ -17,7 +18,10 @@ namespace Heroes
         
         public void OnDrag(PointerEventData eventData)
         {
-            transform.position = eventData.pointerCurrentRaycast.worldPosition;
+            if (IsPlayer)
+            {
+                transform.position = eventData.pointerCurrentRaycast.worldPosition;
+            }
         }
     }
 }

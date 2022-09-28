@@ -27,6 +27,7 @@ namespace Ui
             foreach (var preview in playerPreviews)
             {
                 preview.Data = gameSettings.PlayerTeam[playerIdx++];
+                preview.IsPlayer = true;
             }
 
             var enemyIdx = 0;
@@ -35,6 +36,7 @@ namespace Ui
                 var randomPoint = mapProvider.GetMap().GetRandomPoint();
                 preview.transform.position = randomPoint;
                 preview.Data = gameSettings.EnemyTeam[enemyIdx++];
+                preview.IsPlayer = false;
             }
         }
 
@@ -51,23 +53,22 @@ namespace Ui
         private void StartPlaying()
         {
             var spawnData = new List<HeroSpawnData>();
-            ConvertToSpawnData(spawnData, playerPreviews, true);
-            ConvertToSpawnData(spawnData, enemyPreviews, false);
+            PreviewToSpawnData(spawnData, playerPreviews);
+            PreviewToSpawnData(spawnData, enemyPreviews);
             var args = new GameStateArgs(spawnData);
             _gameStateMachine.Enter<GameState, GameStateArgs>(args);
         }
 
-        private static void ConvertToSpawnData(
+        private static void PreviewToSpawnData(
             ICollection<HeroSpawnData> spawnData,
-            IEnumerable<HeroPreview> previews,
-            bool isPlayer)
+            IEnumerable<HeroPreview> previews)
         {
             foreach (var preview in previews)
             {
                 spawnData.Add(new HeroSpawnData(
                     preview.Data, 
                     preview.transform.position, 
-                    isPlayer));
+                    preview.IsPlayer));
             }
         }
     }
