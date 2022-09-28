@@ -29,15 +29,24 @@ namespace StateMachine
 
         public void Enter(GameStateArgs args)
         {
+            _heroSwitchCount = _gameSettings.HeroSwitchCount;
             _mapProvider.GetMap().Init(_gameSettings);
             SpawnHeroes(args.SpawnData);
-            _heroSwitchCount = _gameSettings.HeroSwitchCount;
+        }
+        
+        public void Tick()
+        {
             foreach (var hero in _heroStorage.GetAll())
             {
-                hero.Clicked += SwitchHero;
+                hero.Bt.Tick();
             }
         }
 
+        public void Exit()
+        {
+            DisposeHeroes();
+        }
+        
         private void SpawnHeroes(IEnumerable<HeroSpawnData> spawnData)
         {
             foreach (var data in spawnData)
@@ -49,11 +58,12 @@ namespace StateMachine
                     hero.Clicked += SwitchHero;
             }
         }
-        
-        public void Exit()
+
+        private void DisposeHeroes()
         {
             foreach (var hero in _heroStorage.GetAll())
             {
+                _heroStorage.Remove(hero);
                 hero.Died -= OnHeroDied;
                 if (hero.State.IsPlayer)
                     hero.Clicked -= SwitchHero;
@@ -72,14 +82,6 @@ namespace StateMachine
                 return;
             hero.State.IsAggressive = !hero.State.IsAggressive;
             _heroSwitchCount--;
-        }
-        
-        public void Tick()
-        {
-            foreach (var hero in _heroStorage.GetAll())
-            {
-                hero.Bt.Tick();
-            }
         }
     }
 }
