@@ -7,6 +7,7 @@ namespace GameMap
     public struct CellData
     {
         public int Mirage;
+        public bool IsOpen;
     }
     
     public class Map : MonoBehaviour
@@ -15,12 +16,6 @@ namespace GameMap
 
         private CellData[,] _cellData;
 
-        public CellData this[int x, int y]
-        {
-            get => _cellData[x, y];
-            set => _cellData[x, y] = value;
-        }
-        
         public void Init(GameSettings gameSettings)
         {
             var bounds = _borders.bounds;
@@ -35,6 +30,18 @@ namespace GameMap
                 }
             }
             DistributeMirage(gameSettings.MirageCount);
+        }
+
+        public void Explore(int x, int y)
+        {
+            _cellData[x, y].IsOpen = true;
+        }
+
+        public int ExtractMirage(int x, int y)
+        {
+            var mirage = _cellData[x, y].Mirage;
+            _cellData[x, y].Mirage = 0;
+            return mirage;
         }
 
         private void DistributeMirage(int mirageCount)
