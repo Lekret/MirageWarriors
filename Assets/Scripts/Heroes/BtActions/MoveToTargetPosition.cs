@@ -1,5 +1,6 @@
 ﻿using CleverCrow.Fluid.BTs.Tasks;
 using CleverCrow.Fluid.BTs.Tasks.Actions;
+using UnityEngine;
 
 namespace Heroes.BtActions
 {
@@ -14,7 +15,15 @@ namespace Heroes.BtActions
 
         protected override TaskStatus OnUpdate()
         {
-            //TODO MOVE TO TARGET POSITION
+            var targetPosition = _hero.State.TargetPosition;
+            if (!targetPosition.HasValue)
+                return TaskStatus.Failure;
+            
+            var transform = _hero.transform;
+            transform.position = Vector2.MoveTowards(
+                transform.position, 
+                targetPosition.Value, 
+                _hero.Data.Speed * Time.deltaTime);
             return TaskStatus.Success;
         }
     }

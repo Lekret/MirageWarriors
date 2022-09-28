@@ -1,7 +1,9 @@
-﻿using Services.CameraProvider;
+﻿using Services.BtFactory;
+using Services.CameraProvider;
 using Services.CoroutineRunner;
 using Services.HeroFactory;
 using Services.HeroStorage;
+using Services.MapProvider;
 using Services.SceneLoader;
 using StateMachine;
 using StaticData;
@@ -24,6 +26,8 @@ namespace Infrastructure
             _sceneLoader = new SceneLoader(this);
             _stateMachine = new GameStateMachine();
             var cameraProvider = new MainCameraProvider();
+            var mapProvider = new MapProvider();
+            var btFactory = new BtFactory(mapProvider);
             var heroStorage = new HeroStorage();
             var uiFactory = new UiFactory(
                 prefabs,

@@ -1,11 +1,19 @@
 ﻿using CleverCrow.Fluid.BTs.Trees;
 using Heroes;
 using Heroes.BtActions;
+using Services.MapProvider;
 
 namespace Services.BtFactory
 {
     public class BtFactory : IBtFactory
     {
+        private readonly IMapProvider _mapProvider;
+
+        public BtFactory(IMapProvider mapProvider)
+        {
+            _mapProvider = mapProvider;
+        }
+
         public BehaviorTree Create(Hero hero)
         {
             var builder = new BehaviorTreeBuilder(hero.gameObject);
@@ -28,7 +36,8 @@ namespace Services.BtFactory
                         .Sequence()
                             .AddNode(new HasCooldown(hero))
                             .AddNode(new SubtractCooldown(hero))
-                            .AddNode(new MoveToRandomDirection(hero))
+                            .AddNode(new SetRandomTargetPosition(hero, _mapProvider))
+                            .AddNode(new MoveToTargetPosition(hero))
                         .End()
                         .AddNode(new SetHeroPeaceful(hero))
                     .End()
