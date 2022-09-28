@@ -28,8 +28,8 @@ namespace Ui
             _previews = previews;
             foreach (var data in previews)
             {
-                data.PointerEntered += ShowPreview;
-                data.PointerExited += TryHide;
+                data.InteractStarted += ShowPreview;
+                data.InteractEnded += TryHide;
             }
             Hide();
         }
@@ -38,8 +38,8 @@ namespace Ui
         {
             foreach (var preview in _previews)
             {
-                preview.PointerEntered -= ShowPreview;
-                preview.PointerExited -= TryHide;
+                preview.InteractStarted -= ShowPreview;
+                preview.InteractEnded -= TryHide;
             }
         }
         
@@ -51,6 +51,8 @@ namespace Ui
         
         private void ShowPreview(HeroPreview preview, PointerEventData eventData)
         {
+            if (_currentPreview.IsDragged)
+                return;
             _currentPreview = preview;
             gameObject.SetActive(true);
             transform.position = preview.transform.position;

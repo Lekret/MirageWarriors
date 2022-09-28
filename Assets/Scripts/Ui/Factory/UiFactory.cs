@@ -34,8 +34,6 @@ namespace Ui.Factory
         public void CreateUiRoot()
         {
             _uiRoot = Object.Instantiate(_prefabs.UiRoot).transform;
-            var canvas = _uiRoot.GetComponent<Canvas>();
-            canvas.worldCamera = _cameraProvider.GetCamera();
         }
 
         public HeroInfo CreateHeroInfo(IEnumerable<HeroPreview> previews)
@@ -48,7 +46,7 @@ namespace Ui.Factory
         public SetupUi CreateSetup()
         {
             var setupUi = Object.Instantiate(_prefabs.SetupUi, _uiRoot);
-            setupUi.Init(_gameStateMachine, _mapProvider, _gameSettings);
+            setupUi.Init(_gameStateMachine, _mapProvider, _cameraProvider, _gameSettings);
             return setupUi;
         }
     }

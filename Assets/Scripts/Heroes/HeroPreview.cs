@@ -5,24 +5,38 @@ using UnityEngine.EventSystems;
 
 namespace Heroes
 {
-    public class HeroPreview : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler
+    public class HeroPreview : MonoBehaviour,
+        IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public bool IsPlayer { get; set; }
+        public bool IsDragged { get; private set; }
         public HeroData Data { get; set; }
-        public event Action<HeroPreview, PointerEventData> PointerEntered;
-        public event Action<HeroPreview> PointerExited;
+        public event Action<HeroPreview, PointerEventData> InteractStarted;
+        public event Action<HeroPreview> InteractEnded;
         
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => 
-            PointerEntered?.Invoke(this, eventData);
+            InteractStarted?.Invoke(this, eventData);
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => 
-            PointerExited?.Invoke(this);
+            InteractEnded?.Invoke(this);
+
+        void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
+        {
+            IsDragged = true;
+            InteractEnded?.Invoke(this);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            IsDragged = false;
+            InteractStarted?.Invoke(this, eventData);
+        }
 
         public void OnDrag(PointerEventData eventData)
         {
             if (IsPlayer)
             {
-                transform.position = eventData.pointerCurrentRaycast.worldPosition;
+                transform.position = eventData.pointerCurrentRaycast.screenPosition;
             }
         }
     }

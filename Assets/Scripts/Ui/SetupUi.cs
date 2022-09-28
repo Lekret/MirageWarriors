@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Heroes;
+using Services.CameraProvider;
 using Services.MapProvider;
 using StateMachine;
 using StaticData;
@@ -15,13 +16,16 @@ namespace Ui
         [SerializeField] private HeroPreview[] enemyPreviews;
         
         private IGameStateMachine _gameStateMachine;
+        private ICameraProvider _cameraProvider;
 
         public void Init(
             IGameStateMachine gameStateMachine,
             IMapProvider mapProvider,
+            ICameraProvider cameraProvider,
             GameSettings gameSettings)
         {
             _gameStateMachine = gameStateMachine;
+            _cameraProvider = cameraProvider;
             UpdatePlayerPreviews(gameSettings.PlayerTeam);
             UpdateEnemyPreviews(mapProvider, gameSettings.EnemyTeam);
         }
@@ -54,13 +58,17 @@ namespace Ui
             }
         }
         
-        private void UpdateEnemyPreviews(IMapProvider mapProvider, IReadOnlyList<HeroData> enemyTeam)
+        private void UpdateEnemyPreviews(
+            IMapProvider mapProvider,
+            IReadOnlyList<HeroData> enemyTeam)
         {
             var enemyIdx = 0;
+            var cam = _cameraProvider.GetCamera();
             foreach (var preview in enemyPreviews)
             {
                 var randomPoint = mapProvider.GetMap().GetRandomPoint();
-                preview.transform.position = randomPoint;
+                var screenPoint = cam.WorldToScreenPoint(randomPoint);
+                preview.transform.position = screenPoint;
                 preview.Data = enemyTeam[enemyIdx++];
                 preview.IsPlayer = false;
             }
@@ -75,15 +83,16 @@ namespace Ui
             _gameStateMachine.Enter<GameState, GameStateArgs>(args);
         }
 
-        private static void PreviewToSpawnData(
+        private void PreviewToSpawnData(
             ICollection<HeroSpawnData> spawnData,
             IEnumerable<HeroPreview> previews)
         {
+            var cam = _cameraProvider.GetCamera();
             foreach (var preview in previews)
             {
                 spawnData.Add(new HeroSpawnData(
                     preview.Data,
-                    preview.transform.position,
+                    cam.ScreenToWorldPoint(preview.transform.position), 
                     preview.IsPlayer));
             }
         }
