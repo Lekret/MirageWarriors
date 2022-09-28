@@ -1,35 +1,52 @@
-﻿using Heroes;
+﻿using System.Collections.Generic;
+using Heroes;
+using Services.HeroFactory;
 using Services.HeroStorage;
 using StaticData;
 
 namespace StateMachine
 {
-    public class GameState : IEnterState, IExitState, ITickState
+    public class GameState : IEnterState<GameStateArgs>, IExitState, ITickState
     {
-        private readonly IHeroStorage _heroStorage;
         private readonly GameSettings _gameSettings;
+        private readonly IHeroStorage _heroStorage;
+        private readonly IHeroFactory _heroFactory;
         private int _heroSwitchCount;
 
-        public GameState(IHeroStorage heroStorage, GameSettings gameSettings)
+        public GameState(
+            GameSettings gameSettings,
+            IHeroStorage heroStorage,
+            IHeroFactory heroFactory)
         {
-            _heroStorage = heroStorage;
             _gameSettings = gameSettings;
+            _heroStorage = heroStorage;
+            _heroFactory = heroFactory;
         }
 
-        public void Enter()
+        public void Enter(GameStateArgs args)
         {
+            SpawnHeroes(args.SpawnData);
             _heroSwitchCount = _gameSettings.HeroSwitchCount;
             foreach (var hero in _heroStorage.GetAll())
             {
-                hero.PointerClicked += OnSwitchHero;
+                hero.Clicked += OnSwitchHero;
             }
         }
 
+        private void SpawnHeroes(IEnumerable<HeroSpawnData> spawnData)
+        {
+            foreach (var data in spawnData)
+            {
+                var hero = _heroFactory.CreateHero(data.Data, data.IsPlayer, data.Position);
+                _heroStorage.Add(hero);
+            }
+        }
+        
         public void Exit()
         {
             foreach (var hero in _heroStorage.GetAll())
             {
-                hero.PointerClicked -= OnSwitchHero;
+                hero.Clicked -= OnSwitchHero;
             }
         }
 

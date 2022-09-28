@@ -10,6 +10,11 @@
         void Enter();
     }
 
+    public interface IEnterState<TArgs> : IState
+    {
+        void Enter(TArgs args);
+    }
+
     public interface IExitState : IState
     {
         void Exit();

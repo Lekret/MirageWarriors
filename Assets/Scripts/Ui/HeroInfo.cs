@@ -1,6 +1,6 @@
-﻿using Heroes;
+﻿using System.Collections.Generic;
+using Heroes;
 using Services.CameraProvider;
-using Services.HeroStorage;
 using StaticData;
 using TMPro;
 using UnityEngine;
@@ -21,45 +21,45 @@ namespace Ui
         [SerializeField] private TextMeshProUGUI _cooldown;
 
         private ICameraProvider _cameraProvider;
-        private IHeroStorage _heroStorage;
-        private Hero _currentHero;
+        private IEnumerable<HeroPreview> _previews;
+        private HeroPreview _currentPreview;
         
-        public void Init(ICameraProvider cameraProvider, IHeroStorage heroStorage)
+        public void Init(ICameraProvider cameraProvider, IEnumerable<HeroPreview> previews)
         {
+            _previews = previews;
             _cameraProvider = cameraProvider;
-            _heroStorage = heroStorage;
-            foreach (var hero in _heroStorage.GetAll())
+            foreach (var data in previews)
             {
-                hero.PointerEntered += SetHero;
-                hero.PointerExited += TryHide;
+                data.PointerEntered += SetHero;
+                data.PointerExited += TryHide;
             }
             Hide();
         }
 
         private void OnDestroy()
         {
-            foreach (var hero in _heroStorage.GetAll())
+            foreach (var preview in _previews)
             {
-                hero.PointerEntered -= SetHero;
-                hero.PointerExited -= TryHide;
+                preview.PointerEntered -= SetHero;
+                preview.PointerExited -= TryHide;
             }
         }
         
-        private void TryHide(Hero hero)
+        private void TryHide(HeroPreview preview)
         {
-            if (_currentHero == hero)
+            if (_currentPreview == preview)
                 Hide();
         }
         
-        private void SetHero(Hero hero)
+        private void SetHero(HeroPreview preview)
         {
-            _currentHero = hero;
+            _currentPreview = preview;
             gameObject.SetActive(true);
             var cam = _cameraProvider.GetCamera();
-            var heroPosition = hero.transform.position;
+            var heroPosition = preview.transform.position;
             var screenPosition = cam.WorldToScreenPoint(heroPosition);
             transform.position = screenPosition;
-            SetData(hero.Data);
+            SetData(preview.Data);
         }
         
         private void SetData(HeroData data)

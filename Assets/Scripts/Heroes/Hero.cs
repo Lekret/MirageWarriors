@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 
 namespace Heroes
 {
-    public class Hero : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    [RequireComponent(typeof(CircleCollider2D))]
+    public class Hero : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private ActionArea _actionArea;
         [Tooltip("Field is exposed for tree debugger")]
@@ -17,9 +18,7 @@ namespace Heroes
         public HeroState State { get; private set; }
         public BehaviorTree Bt => _bt;
         public IEnumerable<Hero> NearestHeroes => _actionArea.NearestHeroes;
-        public event Action<Hero> PointerEntered;
-        public event Action<Hero> PointerExited; 
-        public event Action<Hero> PointerClicked;
+        public event Action<Hero> Clicked;
         
         public void Init(HeroData data, bool isPlayer)
         {
@@ -32,11 +31,7 @@ namespace Heroes
         {
             _bt = bt;
         }
-
-        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => PointerEntered?.Invoke(this);
-
-        void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => PointerExited?.Invoke(this);
-
-        void IPointerClickHandler.OnPointerClick(PointerEventData eventData) => PointerClicked?.Invoke(this);
+        
+        void IPointerClickHandler.OnPointerClick(PointerEventData eventData) => Clicked?.Invoke(this);
     }
 }

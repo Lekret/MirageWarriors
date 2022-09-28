@@ -1,18 +1,14 @@
 ﻿using System.Collections.Generic;
-using Services.HeroFactory;
-using Services.HeroStorage;
-using UnityEngine;
 using StaticData;
-using Ui.Factory;
 using Ui;
+using Ui.Factory;
+using UnityEngine;
 
 namespace StateMachine
 {
     public class SetupState : IEnterState, IExitState
     {
         private readonly IUiFactory _uiFactory;
-        private readonly IHeroFactory _heroFactory;
-        private readonly IHeroStorage _heroStorage;
         private readonly GameSettings _gameSettings;
         private readonly List<GameObject> _uiControls = new List<GameObject>();
         private SetupUi _setupUi;
@@ -20,19 +16,14 @@ namespace StateMachine
 
         public SetupState(
             IUiFactory uiFactory,
-            IHeroFactory heroFactory,
-            IHeroStorage heroStorage,
             GameSettings gameSettings)
         {
             _uiFactory = uiFactory;
-            _heroFactory = heroFactory;
-            _heroStorage = heroStorage;
             _gameSettings = gameSettings;
         }
 
         public void Enter()
         {
-            SpawnHeroes();
             CreateSetupUi();
         }
         
@@ -41,26 +32,12 @@ namespace StateMachine
             DeleteSetupUi();
         }
         
-        private void SpawnHeroes()
-        {
-            foreach (var data in _gameSettings.PlayerTeam)
-            {
-                var hero = _heroFactory.CreateHero(data, true);
-                _heroStorage.Add(hero);
-            }
-
-            foreach (var data in _gameSettings.EnemyTeam)
-            {
-                var hero = _heroFactory.CreateHero(data, false);
-                _heroStorage.Add(hero);
-            }
-        }
-
         private void CreateSetupUi()
         {
             _uiFactory.CreateUiRoot();
-            _uiControls.Add(_uiFactory.CreateSetup().gameObject);
-            _uiControls.Add(_uiFactory.CreateHeroInfo().gameObject);
+            var setupUi = _uiFactory.CreateSetup();
+            _uiControls.Add(setupUi.gameObject);
+            _uiControls.Add(_uiFactory.CreateHeroInfo(setupUi.PlayerPreviews).gameObject);
         }
 
         private void DeleteSetupUi()

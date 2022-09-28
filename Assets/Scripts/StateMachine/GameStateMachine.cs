@@ -30,6 +30,12 @@ namespace StateMachine
                 enterState.Enter();
             }
         }
+        
+        public void Enter<T, TArgs>(TArgs args) where T : IEnterState<TArgs>
+        {
+            var state = ChangeState<T>();
+            state.Enter(args);
+        }
 
         private T ChangeState<T>() where T : IState
         {

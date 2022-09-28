@@ -16,10 +16,11 @@ namespace Services.HeroFactory
             _btFactory = btFactory;
         }
 
-        public Hero CreateHero(HeroData data, bool isPlayer)
+        public Hero CreateHero(HeroData data, bool isPlayer, Vector2 position)
         {
             var hero = Object.Instantiate(_prefabs.Hero);
             hero.Init(data, isPlayer);
+            hero.transform.position = position;
             var bt = _btFactory.Create(hero);
             hero.SetBt(bt);
             return hero;

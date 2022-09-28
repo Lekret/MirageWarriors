@@ -31,16 +31,15 @@ namespace Infrastructure
             var btFactory = new BtFactory(mapProvider, heroStorage);
             var uiFactory = new UiFactory(
                 prefabs,
+                gameSettings,
                 cameraProvider, 
-                heroStorage, 
-                _stateMachine);
+                _stateMachine,
+                mapProvider);
             var heroFactory = new HeroFactory(prefabs, btFactory);
             var setupState = new SetupState(
                 uiFactory,
-                heroFactory,
-                heroStorage,
                 gameSettings);
-            var gameState = new GameState(heroStorage, gameSettings);
+            var gameState = new GameState(gameSettings, heroStorage, heroFactory);
             var resultState = new ResultState();
             _stateMachine
                 .AddState(setupState)
