@@ -26,9 +26,9 @@ namespace Services.PointService
             var minY = heroPos.y - radius;
             var maxY = heroPos.y + radius;
 
-            for (var y = minY; y <= maxY; y += 1)
+            for (var x = minX; x <= maxX; x += 1)
             {
-                for (var x = minX; x <= maxX; x += 1)
+                for (var y = minY; y <= maxY; y += 1)
                 {
                     if (IsInCircle(new Vector2Int(x, y), heroPos, radius) && map.IsInBounds(x, y))
                     {
