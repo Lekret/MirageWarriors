@@ -51,7 +51,7 @@ namespace Ui
         
         private void ShowPreview(HeroPreview preview, PointerEventData eventData)
         {
-            if (_currentPreview.IsDragged)
+            if (_currentPreview != null && _currentPreview.IsDragged)
                 return;
             _currentPreview = preview;
             gameObject.SetActive(true);
