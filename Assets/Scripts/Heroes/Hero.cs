@@ -1,4 +1,5 @@
 ﻿using System;
+using CleverCrow.Fluid.BTs.Trees;
 using StaticData;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,7 @@ namespace Heroes
     public class Hero : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] private ActionArea _actionArea;
+        [SerializeField] private BehaviorTree _debugBt;
 
         public bool IsPlayer { get; private set; }
         public HeroData Data { get; private set; }
@@ -23,6 +25,11 @@ namespace Heroes
             IsPlayer = isPlayer;
             State = new HeroState(data);
             _actionArea.SetDiameter(data.ActionDiameter);
+        }
+
+        public void SetBehaviorTree(BehaviorTree bt)
+        {
+            _debugBt = bt;
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)

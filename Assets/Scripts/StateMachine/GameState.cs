@@ -1,7 +1,10 @@
 ﻿namespace StateMachine
 {
-    public class GameState : IState
+    public class GameState : ITickState
     {
-        
+        public void Tick()
+        {
+            
+        }
     }
 }
