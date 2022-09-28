@@ -14,7 +14,7 @@ namespace Heroes.BtActions
         protected override bool OnUpdate()
         {
             return _hero.State.IsAggressive ||
-                   _hero.Data.Character != Character.Coward && 
+                   _hero.Data.Character != Character.Pacifist && 
                    _hero.HasAggressiveEnemiesNear();
         }
     }
