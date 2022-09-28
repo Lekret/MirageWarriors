@@ -1,5 +1,4 @@
-﻿using System;
-using Heroes;
+﻿using Heroes;
 using Services.CameraProvider;
 using Services.HeroStorage;
 using StaticData;
@@ -29,16 +28,12 @@ namespace Ui
         {
             _cameraProvider = cameraProvider;
             _heroStorage = heroStorage;
-        }
-
-        private void Awake()
-        {
-            Hide();
             foreach (var hero in _heroStorage.GetAll())
             {
                 hero.PointerEntered += SetHero;
                 hero.PointerExited += TryHide;
             }
+            Hide();
         }
 
         private void OnDestroy()
