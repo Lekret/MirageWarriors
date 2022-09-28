@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actionArea: {fileID: 7547233921895044381}
+  _renderer: {fileID: 8413611141976156204}
 --- !u!114 &7547233921895044381
 MonoBehaviour:
   m_ObjectHideFlags: 0
