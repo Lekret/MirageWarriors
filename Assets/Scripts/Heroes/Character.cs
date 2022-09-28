@@ -1,7 +1,10 @@
 ﻿namespace Heroes
 {
-    public class Character
+    public enum Character
     {
-    
+        None,
+        Coward,
+        Pacifist,
+        Empath
     }
 }
