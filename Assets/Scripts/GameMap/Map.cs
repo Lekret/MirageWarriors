@@ -14,22 +14,31 @@ namespace GameMap
     {
         [SerializeField] private BoxCollider2D _borders;
 
+        private Vector2Int _min;
+        private Vector2Int _max;
+        
         private CellData[,] _cellData;
-
+        
         public void Init(GameSettings gameSettings)
         {
             var bounds = _borders.bounds;
-            var min = bounds.min.ToVec2Int();
-            var max = bounds.max.ToVec2Int();
-            _cellData = new CellData[max.x, max.y];
-            for (var x = min.x; x < max.x; x++)
+            _min = bounds.min.ToVec2Int();
+            _max = bounds.max.ToVec2Int();
+            _cellData = new CellData[_max.x, _max.y];
+            for (var x = _min.x; x < _max.x; x++)
             {
-                for (var y = min.y; y < max.y; y++)
+                for (var y = _min.y; y < _max.y; y++)
                 {
                     _cellData[x, y] = new CellData(); 
                 }
             }
             DistributeMirage(gameSettings.MirageCount);
+        }
+
+        public bool IsInBounds(int x, int y)
+        {
+            return x >= _min.x && x < _max.x &&
+                   y >= _min.y && y < _max.y;
         }
 
         public void Explore(int x, int y)
@@ -60,11 +69,8 @@ namespace GameMap
 
         public Vector2 GetRandomPoint()
         {
-            var bounds = _borders.bounds;
-            var min = bounds.min;
-            var max = bounds.max;
-            var randomX = Random.Range(min.x, max.x);
-            var randomY = Random.Range(min.y, max.y);
+            var randomX = Random.Range(_min.x, _max.x);
+            var randomY = Random.Range(_min.y, _max.y);
             return new Vector2(randomX, randomY);
         }
 
