@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using StaticData;
+using UnityEngine;
+using Utils;
 
 namespace GameMap
 {
     public struct CellData
     {
-        public Vector2 Position;
         public int Mirage;
     }
     
@@ -12,11 +13,27 @@ namespace GameMap
     {
         [SerializeField] private BoxCollider2D _borders;
 
-        private CellData[] _cellData;
+        private CellData[,] _cellData;
 
-        public void Init(int width, int height)
+        public CellData this[int x, int y]
         {
-            _cellData = new CellData[width * height];
+            get => _cellData[x, y];
+            set => _cellData[x, y] = value;
+        }
+        
+        public void Init(GameSettings gameSettings)
+        {
+            var bounds = _borders.bounds;
+            var min = bounds.min.ToVec2Int();
+            var max = bounds.max.ToVec2Int();
+            _cellData = new CellData[min.x, max.x];
+            for (var x = min.x; x < max.x; x++)
+            {
+                for (var y = min.y; y < max.y; y++)
+                {
+                    _cellData[x, y] = new CellData(); 
+                }
+            }
         }
 
         public Vector2 GetRandomPoint()
@@ -27,6 +44,13 @@ namespace GameMap
             var randomX = Random.Range(min.x, max.x);
             var randomY = Random.Range(min.y, max.y);
             return new Vector2(randomX, randomY);
+        }
+
+        [ContextMenu("Position to origin")]
+        private void PositionToOrigin()
+        {
+            var bounds = _borders.bounds;
+            transform.position = bounds.max - bounds.center;
         }
     }
 }

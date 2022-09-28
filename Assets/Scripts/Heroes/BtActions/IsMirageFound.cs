@@ -11,7 +11,7 @@ namespace Heroes.BtActions
         
         protected override bool OnUpdate()
         {
-            //TODO MIRAGE FOUND
+            
             return false;
         }
     }

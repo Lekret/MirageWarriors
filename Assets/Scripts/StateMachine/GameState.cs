@@ -29,7 +29,7 @@ namespace StateMachine
 
         public void Enter(GameStateArgs args)
         {
-            _mapProvider.GetMap().Init(_gameSettings.MapWidth, _gameSettings.MapHeight);
+            _mapProvider.GetMap().Init(_gameSettings);
             SpawnHeroes(args.SpawnData);
             _heroSwitchCount = _gameSettings.HeroSwitchCount;
             foreach (var hero in _heroStorage.GetAll())
