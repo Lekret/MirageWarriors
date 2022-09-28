@@ -9,13 +9,27 @@ namespace Heroes
     {
         public bool IsPlayer { get; set; }
         public HeroData Data { get; set; }
-        public event Action<HeroPreview> PointerEntered;
+        public event Action<HeroPreview, PointerEventData> PointerEntered;
         public event Action<HeroPreview> PointerExited;
-        
-        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => PointerEntered?.Invoke(this);
 
-        void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => PointerExited?.Invoke(this);
+        private bool _entered;
         
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+        {
+            if (_entered)
+                return;
+            PointerEntered?.Invoke(this, eventData);
+            _entered = true;
+        }
+
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
+        {
+            if (!_entered)
+                return;
+            PointerExited?.Invoke(this);
+            _entered = false;
+        }
+
         public void OnDrag(PointerEventData eventData)
         {
             if (IsPlayer)
