@@ -11,6 +11,7 @@ namespace Heroes
 
         public bool IsPlayer { get; private set; }
         public HeroData Data { get; private set; }
+        public HeroState State { get; private set; }
 
         public event Action<Hero> PointerEntered;
         public event Action<Hero> PointerExited; 
@@ -20,6 +21,7 @@ namespace Heroes
         {
             Data = data;
             IsPlayer = isPlayer;
+            State = new HeroState(data);
             _actionArea.SetDiameter(data.ActionDiameter);
         }
 
