@@ -26,7 +26,7 @@ namespace GameMap
             var bounds = _borders.bounds;
             var min = bounds.min.ToVec2Int();
             var max = bounds.max.ToVec2Int();
-            _cellData = new CellData[min.x, max.x];
+            _cellData = new CellData[max.x, max.y];
             for (var x = min.x; x < max.x; x++)
             {
                 for (var y = min.y; y < max.y; y++)
