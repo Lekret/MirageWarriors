@@ -27,12 +27,29 @@ namespace GameMap
             var min = bounds.min.ToVec2Int();
             var max = bounds.max.ToVec2Int();
             _cellData = new CellData[max.x, max.y];
+            //TODO Mirage data service
+            var mirageCount = gameSettings.MirageCount;
             for (var x = min.x; x < max.x; x++)
             {
                 for (var y = min.y; y < max.y; y++)
                 {
                     _cellData[x, y] = new CellData(); 
                 }
+            }
+            DistributeMirage(mirageCount);
+        }
+
+        private void DistributeMirage(int mirageCount)
+        {
+            var width = _cellData.GetLength(0);
+            var height = _cellData.GetLength(1);
+            while (mirageCount > 0)
+            {
+                var rndWidth = Random.Range(0, width);
+                var rndHeight = Random.Range(0, height);
+                var rndMirage = Random.Range(0, Mathf.Min(10, mirageCount));
+                _cellData[rndWidth, rndHeight].Mirage += rndMirage;
+                mirageCount -= rndMirage;
             }
         }
 
