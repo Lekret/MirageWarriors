@@ -11,24 +11,12 @@ namespace Heroes
         public HeroData Data { get; set; }
         public event Action<HeroPreview, PointerEventData> PointerEntered;
         public event Action<HeroPreview> PointerExited;
-
-        private bool _entered;
         
-        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
-        {
-            if (_entered)
-                return;
+        void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) => 
             PointerEntered?.Invoke(this, eventData);
-            _entered = true;
-        }
 
-        void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
-        {
-            if (!_entered)
-                return;
+        void IPointerExitHandler.OnPointerExit(PointerEventData eventData) => 
             PointerExited?.Invoke(this);
-            _entered = false;
-        }
 
         public void OnDrag(PointerEventData eventData)
         {
