@@ -2,6 +2,7 @@
 using Heroes;
 using Services.HeroFactory;
 using Services.HeroStorage;
+using Services.MapProvider;
 using StaticData;
 
 namespace StateMachine
@@ -11,20 +12,24 @@ namespace StateMachine
         private readonly GameSettings _gameSettings;
         private readonly IHeroStorage _heroStorage;
         private readonly IHeroFactory _heroFactory;
+        private readonly IMapProvider _mapProvider;
         private int _heroSwitchCount;
 
         public GameState(
             GameSettings gameSettings,
             IHeroStorage heroStorage,
-            IHeroFactory heroFactory)
+            IHeroFactory heroFactory,
+            IMapProvider mapProvider)
         {
             _gameSettings = gameSettings;
             _heroStorage = heroStorage;
             _heroFactory = heroFactory;
+            _mapProvider = mapProvider;
         }
 
         public void Enter(GameStateArgs args)
         {
+            _mapProvider.GetMap().Init(_gameSettings.MapWidth, _gameSettings.MapHeight);
             SpawnHeroes(args.SpawnData);
             _heroSwitchCount = _gameSettings.HeroSwitchCount;
             foreach (var hero in _heroStorage.GetAll())
