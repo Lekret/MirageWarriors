@@ -18,7 +18,7 @@ namespace Heroes
         public event Action<Hero> PointerEntered;
         public event Action<Hero> PointerExited; 
         public event Action<Hero> PointerClicked;
-
+        
         public void Init(HeroData data, bool isPlayer)
         {
             Data = data;

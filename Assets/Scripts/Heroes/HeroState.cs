@@ -7,15 +7,14 @@ namespace Heroes
     {
         public int Shield;
         public int Health;
-        public int Cooldown;
-        public bool IsBattling;
+        public float Cooldown;
+        public bool IsAggressive;
         public Vector2? TargetPosition;
 
         public HeroState(HeroData data)
         {
             Shield = data.Shield;
             Health = data.Health;
-            Cooldown = 0;
         }
     }
 }
