@@ -5,12 +5,12 @@ namespace Heroes
 {
     public class HeroState
     {
-        public readonly bool IsPlayer;
-        public int Shield;
-        public int Health;
-        public float Cooldown;
-        public bool IsAggressive;
-        public Vector2? TargetPosition;
+        public bool IsPlayer { get; }
+        public int Shield { get; private set; }
+        public int Health { get; private set; }
+        public float Cooldown { get; set; }
+        public bool IsAggressive { get; set; }
+        public Vector2? TargetPosition { get; set; }
 
         public HeroState(HeroData data, bool isPlayer)
         {

@@ -40,7 +40,7 @@ namespace Infrastructure
                 heroFactory,
                 heroStorage,
                 gameSettings);
-            var gameState = new GameState();
+            var gameState = new GameState(heroStorage, gameSettings);
             var resultState = new ResultState();
             _stateMachine
                 .AddState(setupState)

@@ -15,8 +15,8 @@ namespace Heroes
         
         public HeroData Data { get; private set; }
         public HeroState State { get; private set; }
-        public IEnumerable<Hero> NearestHeroes => _actionArea.NearestHeroes;
         public BehaviorTree Bt => _bt;
+        public IEnumerable<Hero> NearestHeroes => _actionArea.NearestHeroes;
         public event Action<Hero> PointerEntered;
         public event Action<Hero> PointerExited; 
         public event Action<Hero> PointerClicked;
