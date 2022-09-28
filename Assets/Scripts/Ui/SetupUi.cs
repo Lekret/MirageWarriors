@@ -15,7 +15,6 @@ namespace Ui
         [SerializeField] private HeroPreview[] enemyPreviews;
         
         private IGameStateMachine _gameStateMachine;
-        public IEnumerable<HeroPreview> PlayerPreviews => playerPreviews;
 
         public void Init(
             IGameStateMachine gameStateMachine,
@@ -23,21 +22,16 @@ namespace Ui
             GameSettings gameSettings)
         {
             _gameStateMachine = gameStateMachine;
-            var playerIdx = 0;
-            foreach (var preview in playerPreviews)
-            {
-                preview.Data = gameSettings.PlayerTeam[playerIdx++];
-                preview.IsPlayer = true;
-            }
+            UpdatePlayerPreviews(gameSettings.PlayerTeam);
+            UpdateEnemyPreviews(mapProvider, gameSettings.EnemyTeam);
+        }
 
-            var enemyIdx = 0;
-            foreach (var preview in enemyPreviews)
-            {
-                var randomPoint = mapProvider.GetMap().GetRandomPoint();
-                preview.transform.position = randomPoint;
-                preview.Data = gameSettings.EnemyTeam[enemyIdx++];
-                preview.IsPlayer = false;
-            }
+        public IEnumerable<HeroPreview> GetPreviews()
+        {
+            var previews = new List<HeroPreview>();
+            previews.AddRange(playerPreviews);
+            previews.AddRange(enemyPreviews);
+            return previews;
         }
 
         private void Awake()
@@ -48,6 +42,28 @@ namespace Ui
         private void OnDestroy()
         {
             _start.onClick.RemoveListener(StartPlaying);
+        }
+        
+        private void UpdatePlayerPreviews(IReadOnlyList<HeroData> playerTeam)
+        {
+            var playerIdx = 0;
+            foreach (var preview in playerPreviews)
+            {
+                preview.Data = playerTeam[playerIdx++];
+                preview.IsPlayer = true;
+            }
+        }
+        
+        private void UpdateEnemyPreviews(IMapProvider mapProvider, IReadOnlyList<HeroData> enemyTeam)
+        {
+            var enemyIdx = 0;
+            foreach (var preview in enemyPreviews)
+            {
+                var randomPoint = mapProvider.GetMap().GetRandomPoint();
+                preview.transform.position = randomPoint;
+                preview.Data = enemyTeam[enemyIdx++];
+                preview.IsPlayer = false;
+            }
         }
         
         private void StartPlaying()
@@ -66,8 +82,8 @@ namespace Ui
             foreach (var preview in previews)
             {
                 spawnData.Add(new HeroSpawnData(
-                    preview.Data, 
-                    preview.transform.position, 
+                    preview.Data,
+                    preview.transform.position,
                     preview.IsPlayer));
             }
         }

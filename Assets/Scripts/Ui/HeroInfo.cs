@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Heroes;
-using Services.CameraProvider;
 using StaticData;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Ui
 {
@@ -20,17 +20,15 @@ namespace Ui
         [SerializeField] private TextMeshProUGUI _health;
         [SerializeField] private TextMeshProUGUI _cooldown;
 
-        private ICameraProvider _cameraProvider;
         private IEnumerable<HeroPreview> _previews;
         private HeroPreview _currentPreview;
         
-        public void Init(ICameraProvider cameraProvider, IEnumerable<HeroPreview> previews)
+        public void Init(IEnumerable<HeroPreview> previews)
         {
             _previews = previews;
-            _cameraProvider = cameraProvider;
             foreach (var data in previews)
             {
-                data.PointerEntered += SetHero;
+                data.PointerEntered += ShowPreview;
                 data.PointerExited += TryHide;
             }
             Hide();
@@ -40,7 +38,7 @@ namespace Ui
         {
             foreach (var preview in _previews)
             {
-                preview.PointerEntered -= SetHero;
+                preview.PointerEntered -= ShowPreview;
                 preview.PointerExited -= TryHide;
             }
         }
@@ -51,21 +49,18 @@ namespace Ui
                 Hide();
         }
         
-        private void SetHero(HeroPreview preview)
+        private void ShowPreview(HeroPreview preview, PointerEventData eventData)
         {
             _currentPreview = preview;
             gameObject.SetActive(true);
-            var cam = _cameraProvider.GetCamera();
-            var heroPosition = preview.transform.position;
-            var screenPosition = cam.WorldToScreenPoint(heroPosition);
-            transform.position = screenPosition;
+            transform.position = preview.transform.position;
             SetData(preview.Data);
         }
         
         private void SetData(HeroData data)
         {
             _initiative.text = $"Initiative: {data.Initiative}";
-            _actionDiameter.text = $"Action diameter: {data.ActionDiameter}";
+            _actionDiameter.text = $"Diameter: {data.ActionDiameter}";
             _enthusiasm.text = $"Enthusiasm: {data.Enthusiasm}";
             _search.text = $"Search: {data.Search}";
             _speed.text = $"Speed: {data.Speed}";

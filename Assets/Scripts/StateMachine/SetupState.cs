@@ -32,7 +32,8 @@ namespace StateMachine
             _uiFactory.CreateUiRoot();
             var setupUi = _uiFactory.CreateSetup();
             _uiControls.Add(setupUi.gameObject);
-            _uiControls.Add(_uiFactory.CreateHeroInfo(setupUi.PlayerPreviews).gameObject);
+            var heroInfo = _uiFactory.CreateHeroInfo(setupUi.GetPreviews());
+            _uiControls.Add(heroInfo.gameObject);
         }
 
         private void DeleteSetupUi()

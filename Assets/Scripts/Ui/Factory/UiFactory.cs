@@ -41,7 +41,7 @@ namespace Ui.Factory
         public HeroInfo CreateHeroInfo(IEnumerable<HeroPreview> previews)
         {
             var heroInfo = Object.Instantiate(_prefabs.HeroInfo, _uiRoot);
-            heroInfo.Init(_cameraProvider, previews);
+            heroInfo.Init(previews);
             return heroInfo;
         }
 
