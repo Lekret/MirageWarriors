@@ -32,7 +32,11 @@ namespace Infrastructure
             var heroStorage = new HeroStorage();
             var mirageService = new MirageService(gameSettings);
             var pointService = new PointService(mapProvider);
-            var btFactory = new BtFactory(mapProvider, heroStorage, pointService);
+            var btFactory = new BtFactory(
+                mapProvider,
+                heroStorage,
+                pointService,
+                mirageService);
             var uiFactory = new UiFactory(
                 prefabs,
                 gameSettings,

@@ -16,11 +16,16 @@ namespace Heroes.BtActions
         private readonly IMirageService _mirageService;
         private readonly List<Vector2Int> _pointsBuffer = new List<Vector2Int>();
 
-        public CollectMirage(Hero hero, IPointService pointService, IMapProvider mapProvider)
+        public CollectMirage(
+            Hero hero, 
+            IPointService pointService, 
+            IMapProvider mapProvider,
+            IMirageService mirageService)
         {
             _hero = hero;
             _pointService = pointService;
             _mapProvider = mapProvider;
+            _mirageService = mirageService;
             Name = nameof(CollectMirage);
         }
         
@@ -36,13 +41,12 @@ namespace Heroes.BtActions
             {
                 if (collectedCount >= collectLimit)
                     break;
-                var cellData = map[point.x, point.y];
-                if (cellData.IsOpen)
+                ref var cell = ref map[point.x, point.y];
+                if (cell.IsOpen)
                 {
                     collectedCount++;
-                    collectedMirage += cellData.Mirage;
-                    cellData.Mirage = 0;
-                    map[point.x, point.y] = cellData;
+                    collectedMirage += cell.Mirage;
+                    cell.Mirage = 0;
                 }
             }
 

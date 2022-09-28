@@ -12,11 +12,7 @@ namespace GameMap
         private Vector2Int _max;
         private CellData[,] _cellData;
 
-        public CellData this[int x, int y]
-        {
-            get => _cellData[x, y];
-            set => _cellData[x, y] = value;
-        }
+        public ref CellData this[int x, int y] => ref _cellData[x, y];
 
         public void Init(GameSettings gameSettings)
         {
