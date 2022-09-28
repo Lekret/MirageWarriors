@@ -27,8 +27,6 @@ namespace GameMap
             var min = bounds.min.ToVec2Int();
             var max = bounds.max.ToVec2Int();
             _cellData = new CellData[max.x, max.y];
-            //TODO Mirage data service
-            var mirageCount = gameSettings.MirageCount;
             for (var x = min.x; x < max.x; x++)
             {
                 for (var y = min.y; y < max.y; y++)
@@ -36,7 +34,7 @@ namespace GameMap
                     _cellData[x, y] = new CellData(); 
                 }
             }
-            DistributeMirage(mirageCount);
+            DistributeMirage(gameSettings.MirageCount);
         }
 
         private void DistributeMirage(int mirageCount)
