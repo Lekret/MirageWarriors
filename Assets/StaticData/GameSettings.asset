@@ -18,7 +18,7 @@ MonoBehaviour:
   _heroSwitchCount: 4
   _playerTeam:
   - Initiative: 10
-    ActionDiameter: 300
+    ActionDiameter: 500
     Enthusiasm: 7800
     Search: 500
     Speed: 100
@@ -29,7 +29,7 @@ MonoBehaviour:
     Cooldown: 4
     Character: 0
   - Initiative: 10
-    ActionDiameter: 300
+    ActionDiameter: 500
     Enthusiasm: 7800
     Search: 500
     Speed: 100
@@ -40,7 +40,7 @@ MonoBehaviour:
     Cooldown: 4
     Character: 0
   - Initiative: 10
-    ActionDiameter: 300
+    ActionDiameter: 500
     Enthusiasm: 7800
     Search: 500
     Speed: 100
@@ -51,7 +51,7 @@ MonoBehaviour:
     Cooldown: 4
     Character: 0
   - Initiative: 10
-    ActionDiameter: 300
+    ActionDiameter: 500
     Enthusiasm: 7800
     Search: 500
     Speed: 100
@@ -63,7 +63,7 @@ MonoBehaviour:
     Character: 0
   _enemyTeam:
   - Initiative: 10
-    ActionDiameter: 200
+    ActionDiameter: 350
     Enthusiasm: 7800
     Search: 500
     Speed: 100
@@ -74,7 +74,7 @@ MonoBehaviour:
     Cooldown: 4
     Character: 0
   - Initiative: 10
-    ActionDiameter: 200
+    ActionDiameter: 350
     Enthusiasm: 7800
     Search: 500
     Speed: 100
@@ -85,7 +85,7 @@ MonoBehaviour:
     Cooldown: 4
     Character: 0
   - Initiative: 10
-    ActionDiameter: 200
+    ActionDiameter: 350
     Enthusiasm: 7800
     Search: 500
     Speed: 100
@@ -96,7 +96,7 @@ MonoBehaviour:
     Cooldown: 4
     Character: 0
   - Initiative: 10
-    ActionDiameter: 200
+    ActionDiameter: 350
     Enthusiasm: 7800
     Search: 500
     Speed: 100
