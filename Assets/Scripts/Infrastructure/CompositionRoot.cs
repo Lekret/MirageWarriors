@@ -36,9 +36,7 @@ namespace Infrastructure
                 _stateMachine,
                 mapProvider);
             var heroFactory = new HeroFactory(prefabs, btFactory);
-            var setupState = new SetupState(
-                uiFactory,
-                gameSettings);
+            var setupState = new SetupState(uiFactory);
             var gameState = new GameState(gameSettings, heroStorage, heroFactory);
             var resultState = new ResultState();
             _stateMachine

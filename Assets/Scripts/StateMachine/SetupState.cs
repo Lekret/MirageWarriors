@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using StaticData;
 using Ui;
 using Ui.Factory;
 using UnityEngine;
@@ -9,17 +8,13 @@ namespace StateMachine
     public class SetupState : IEnterState, IExitState
     {
         private readonly IUiFactory _uiFactory;
-        private readonly GameSettings _gameSettings;
         private readonly List<GameObject> _uiControls = new List<GameObject>();
         private SetupUi _setupUi;
         private HeroInfo _heroInfo;
 
-        public SetupState(
-            IUiFactory uiFactory,
-            GameSettings gameSettings)
+        public SetupState(IUiFactory uiFactory)
         {
             _uiFactory = uiFactory;
-            _gameSettings = gameSettings;
         }
 
         public void Enter()
