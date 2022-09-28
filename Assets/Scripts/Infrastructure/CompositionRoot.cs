@@ -5,6 +5,7 @@ using Services.HeroFactory;
 using Services.HeroStorage;
 using Services.MapProvider;
 using Services.MirageService;
+using Services.PointService;
 using Services.SceneLoader;
 using StateMachine;
 using StaticData;
@@ -30,7 +31,8 @@ namespace Infrastructure
             var mapProvider = new MapProvider();
             var heroStorage = new HeroStorage();
             var mirageService = new MirageService(gameSettings);
-            var btFactory = new BtFactory(mapProvider, heroStorage);
+            var pointService = new PointService(mapProvider);
+            var btFactory = new BtFactory(mapProvider, heroStorage, pointService);
             var uiFactory = new UiFactory(
                 prefabs,
                 gameSettings,

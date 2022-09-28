@@ -3,6 +3,7 @@ using Heroes;
 using Heroes.BtActions;
 using Services.HeroStorage;
 using Services.MapProvider;
+using Services.PointService;
 
 namespace Services.BtFactory
 {
@@ -10,11 +11,16 @@ namespace Services.BtFactory
     {
         private readonly IMapProvider _mapProvider;
         private readonly IHeroStorage _heroStorage;
+        private readonly IPointService _pointService;
 
-        public BtFactory(IMapProvider mapProvider, IHeroStorage heroStorage)
+        public BtFactory(
+            IMapProvider mapProvider,
+            IHeroStorage heroStorage, 
+            IPointService pointService)
         {
             _mapProvider = mapProvider;
             _heroStorage = heroStorage;
+            _pointService = pointService;
         }
 
         public BehaviorTree Create(Hero hero)
@@ -55,9 +61,9 @@ namespace Services.BtFactory
             builder
                 .Selector()
                     .Sequence()
-                        .AddNode(new IsMirageFound())
+                        .AddNode(new IsMirageFound(_mapProvider))
                         .Selector()
-                            .AddNode(new CollectMirage())
+                            .AddNode(new CollectMirage(hero, _pointService, _mapProvider))
                             .AddNode(new MoveToMirage())
                         .End()
                     .End()
@@ -68,7 +74,7 @@ namespace Services.BtFactory
                     .End()
                     .AddNode(new SearchMirage(hero))
                     .Sequence()
-                        .AddNode(new FindMirageSearchArea(hero))
+                        .AddNode(new FindMirageSearchPoint(hero, _mapProvider))
                         .AddNode(new MoveToTargetPosition(hero))
                         .AddNode(new IsTargetPositionReached(hero))
                         .AddNode(new RemoveTargetPosition(hero))

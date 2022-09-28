@@ -6,6 +6,6 @@ namespace Services.PointService
 {
     public interface IPointService
     {
-        void GetPointsInDiameter(Hero hero, List<Vector2Int> buffer);
+        void GetPointsAroundHero(Hero hero, List<Vector2Int> buffer);
     }
 }

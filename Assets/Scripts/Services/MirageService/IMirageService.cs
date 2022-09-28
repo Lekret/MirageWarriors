@@ -1,4 +1,5 @@
 ﻿using System;
+using Heroes;
 
 namespace Services.MirageService
 {
@@ -8,7 +9,6 @@ namespace Services.MirageService
         event Action<int> EnemyMirageChanged;
         event Action PlayerWon;
         event Action EnemyWon;
-        void AddToPlayer(int mirage);
-        void AddToEnemy(int mirage);
+        void AddMirage(Hero hero, int mirage);
     }
 }

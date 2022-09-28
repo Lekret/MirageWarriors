@@ -15,7 +15,7 @@ namespace Services.PointService
             _mapProvider = mapProvider;
         }
 
-        public void GetPointsInDiameter(Hero hero, List<Vector2Int> buffer)
+        public void GetPointsAroundHero(Hero hero, List<Vector2Int> buffer)
         {
             var map = _mapProvider.GetMap();
             var radius = hero.Data.ActionDiameter / 2;

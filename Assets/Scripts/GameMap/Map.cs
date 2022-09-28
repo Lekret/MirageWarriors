@@ -4,21 +4,20 @@ using Utils;
 
 namespace GameMap
 {
-    public struct CellData
-    {
-        public int Mirage;
-        public bool IsOpen;
-    }
-    
     public class Map : MonoBehaviour
     {
         [SerializeField] private BoxCollider2D _borders;
 
         private Vector2Int _min;
         private Vector2Int _max;
-        
         private CellData[,] _cellData;
-        
+
+        public CellData this[int x, int y]
+        {
+            get => _cellData[x, y];
+            set => _cellData[x, y] = value;
+        }
+
         public void Init(GameSettings gameSettings)
         {
             var bounds = _borders.bounds;
@@ -39,18 +38,6 @@ namespace GameMap
         {
             return x >= _min.x && x < _max.x &&
                    y >= _min.y && y < _max.y;
-        }
-
-        public void Explore(int x, int y)
-        {
-            _cellData[x, y].IsOpen = true;
-        }
-
-        public int ExtractMirage(int x, int y)
-        {
-            var mirage = _cellData[x, y].Mirage;
-            _cellData[x, y].Mirage = 0;
-            return mirage;
         }
 
         private void DistributeMirage(int mirageCount)
