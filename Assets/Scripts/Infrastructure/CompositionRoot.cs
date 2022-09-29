@@ -53,7 +53,8 @@ namespace Infrastructure
                 gameSettings, 
                 heroStorage, 
                 heroFactory, 
-                mapProvider);
+                mapProvider,
+                uiFactory);
             var resultState = new ResultState();
             _stateMachine
                 .AddState(setupState)

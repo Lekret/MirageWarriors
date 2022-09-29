@@ -4,6 +4,7 @@ using Services.HeroFactory;
 using Services.HeroStorage;
 using Services.MapProvider;
 using StaticData;
+using Ui.Factory;
 
 namespace StateMachine
 {
@@ -13,18 +14,21 @@ namespace StateMachine
         private readonly IHeroStorage _heroStorage;
         private readonly IHeroFactory _heroFactory;
         private readonly IMapProvider _mapProvider;
+        private readonly IUiFactory _uiFactory;
         private int _heroSwitchCount;
 
         public GameState(
             GameSettings gameSettings,
             IHeroStorage heroStorage,
             IHeroFactory heroFactory,
-            IMapProvider mapProvider)
+            IMapProvider mapProvider,
+            IUiFactory uiFactory)
         {
             _gameSettings = gameSettings;
             _heroStorage = heroStorage;
             _heroFactory = heroFactory;
             _mapProvider = mapProvider;
+            _uiFactory = uiFactory;
         }
 
         public void Enter(GameStateArgs args)
@@ -32,6 +36,7 @@ namespace StateMachine
             _heroSwitchCount = _gameSettings.HeroSwitchCount;
             _mapProvider.GetMap().Init(_gameSettings);
             SpawnHeroes(args.SpawnData);
+            _uiFactory.CreateProgress();
         }
         
         public void Tick()

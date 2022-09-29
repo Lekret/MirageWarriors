@@ -12,97 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74bc45a29c1479c8e7ca0a2a2ce2e61, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  _mapWidth: 800
-  _mapHeight: 1200
   _mirageCount: 1000
   _heroSwitchCount: 4
   _playerTeam:
-  - Initiative: 10
-    ActionDiameter: 500
-    Enthusiasm: 7800
-    Search: 500
-    Speed: 100
-    Collection: 20
-    Damage: 100
-    Shield: 500
-    Health: 500
-    Cooldown: 4
-    Character: 0
-  - Initiative: 10
-    ActionDiameter: 500
-    Enthusiasm: 7800
-    Search: 500
-    Speed: 100
-    Collection: 20
-    Damage: 100
-    Shield: 500
-    Health: 500
-    Cooldown: 4
-    Character: 0
-  - Initiative: 10
-    ActionDiameter: 500
-    Enthusiasm: 7800
-    Search: 500
-    Speed: 100
-    Collection: 20
-    Damage: 100
-    Shield: 500
-    Health: 500
-    Cooldown: 4
-    Character: 0
-  - Initiative: 10
-    ActionDiameter: 500
-    Enthusiasm: 7800
-    Search: 500
-    Speed: 100
-    Collection: 20
-    Damage: 100
-    Shield: 500
-    Health: 500
-    Cooldown: 4
-    Character: 0
+  - {fileID: 11400000, guid: cf3608176150c68498bf81d14944c697, type: 2}
+  - {fileID: 11400000, guid: ea156debf375c6548a176481e4eea90a, type: 2}
+  - {fileID: 11400000, guid: 1adbe09ba25cf784c96c1f5c4c15afe5, type: 2}
+  - {fileID: 11400000, guid: e82169e53394ecd40a557556dfa44607, type: 2}
   _enemyTeam:
-  - Initiative: 10
-    ActionDiameter: 350
-    Enthusiasm: 7800
-    Search: 500
-    Speed: 100
-    Collection: 20
-    Damage: 100
-    Shield: 500
-    Health: 500
-    Cooldown: 4
-    Character: 0
-  - Initiative: 10
-    ActionDiameter: 350
-    Enthusiasm: 7800
-    Search: 500
-    Speed: 100
-    Collection: 20
-    Damage: 100
-    Shield: 500
-    Health: 500
-    Cooldown: 4
-    Character: 0
-  - Initiative: 10
-    ActionDiameter: 350
-    Enthusiasm: 7800
-    Search: 500
-    Speed: 100
-    Collection: 20
-    Damage: 100
-    Shield: 500
-    Health: 500
-    Cooldown: 4
-    Character: 0
-  - Initiative: 10
-    ActionDiameter: 350
-    Enthusiasm: 7800
-    Search: 500
-    Speed: 100
-    Collection: 20
-    Damage: 100
-    Shield: 500
-    Health: 500
-    Cooldown: 4
-    Character: 0
+  - {fileID: 11400000, guid: e5c5bbc80d01be84e8fe9d5e5161b7c2, type: 2}
+  - {fileID: 11400000, guid: 94cf933307c59e64bbf891b2cf4da1d5, type: 2}
+  - {fileID: 11400000, guid: 1115a3882b7e82e4fba6d4f7a7d4b410, type: 2}
+  - {fileID: 11400000, guid: c86a466c32fa8954eaf75e160a128b30, type: 2}

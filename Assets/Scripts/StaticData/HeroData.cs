@@ -1,13 +1,13 @@
-﻿using System;
-using Heroes;
+﻿using Heroes;
+using UnityEngine;
 
 namespace StaticData
 {
-    [Serializable]
-    public class HeroData
+    [CreateAssetMenu(menuName = "StaticData/Hero", fileName = "HeroData")]
+    public class HeroData : ScriptableObject
     {
         public int Initiative = 10;
-        public int ActionDiameter = 100;
+        public int ActionDiameter = 20;
         public int Enthusiasm = 7800;
         public int Search = 500;
         public int Speed = 100;
