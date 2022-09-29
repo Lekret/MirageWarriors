@@ -86,6 +86,7 @@ namespace StateMachine
             if (_heroSwitchCount <= 0)
                 return;
             hero.State.IsAggressive = !hero.State.IsAggressive;
+            hero.State.Cooldown = hero.Data.Cooldown;
             _heroSwitchCount--;
         }
     }
