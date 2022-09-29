@@ -6,13 +6,24 @@ namespace Heroes
 {
     public class HeroState
     {
+        private bool _isAggressive;
         public bool IsPlayer { get; }
         public bool IsDead { get; set; }
         public int Shield { get; private set; }
         public int Health { get; private set; }
         public float Cooldown { get; set; }
-        public bool IsAggressive { get; set; }
+        public bool IsAggressive
+        {
+            get => _isAggressive;
+            set
+            {
+                _isAggressive = value;
+                AggressionChanged?.Invoke(_isAggressive);
+            }
+        }
+
         public Vector2? TargetPosition { get; set; }
+        public event Action<bool> AggressionChanged;
         public event Action HealthChanged;
 
         public HeroState(HeroData data, bool isPlayer)

@@ -29,11 +29,14 @@ namespace Heroes
             _actionArea.SetDiameter(data.ActionDiameter);
             _renderer.color = isPlayer ? Color.green : Color.red;
             State.HealthChanged += OnHealthChanged;
+            State.AggressionChanged += _actionArea.SetAggressive;
+            _actionArea.SetAggressive(State.IsAggressive);
         }
 
         private void OnDestroy()
         {
             State.HealthChanged -= OnHealthChanged;
+            State.AggressionChanged -= _actionArea.SetAggressive;
         }
         
         private void OnHealthChanged()

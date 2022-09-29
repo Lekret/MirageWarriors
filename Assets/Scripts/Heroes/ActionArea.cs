@@ -18,6 +18,14 @@ namespace Heroes
             var side = _collider.radius * _spriteSizeMultiplier;
             _areaRenderer.size = new Vector2(side, side);
         }
+
+        public void SetAggressive(bool aggressive)
+        {
+            var a = _areaRenderer.color.a;
+            var newColor = aggressive ? Color.red : Color.white;
+            newColor.a = a;
+            _areaRenderer.color = newColor;
+        }
         
         private void OnTriggerEnter2D(Collider2D other)
         {
