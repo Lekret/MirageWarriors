@@ -32,7 +32,7 @@ namespace Heroes.BtActions
         private static Vector2 FindCloserMirage(IEnumerable<Vector2Int> miragePositions)
         {
             var closerPosition = new Vector2(float.MaxValue, float.MaxValue);
-            var minSqrMag = 0f;
+            var minSqrMag = float.MaxValue;
             foreach (var position in miragePositions)
             {
                 var newSqrMag = Vector2.SqrMagnitude(closerPosition - position);
