@@ -5,7 +5,6 @@ using Services.HeroStorage;
 using Services.MapProvider;
 using StaticData;
 using Ui.Factory;
-using UnityEngine;
 
 namespace StateMachine
 {
@@ -88,7 +87,6 @@ namespace StateMachine
                 return;
             hero.State.IsAggressive = !hero.State.IsAggressive;
             _heroSwitchCount--;
-            Debug.Log("Hero switched", hero);
         }
     }
 }
