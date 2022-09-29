@@ -36,11 +36,11 @@ namespace Heroes.BtActions
             {
                 if (searchCount >= searchLimit)
                     break;
-                ref var cell = ref map[point.x, point.y];
-                if (cell.IsOpen)
-                    continue;
-                cell.IsOpen = true;
-                searchCount++;
+
+                if (map.OpenCell(point))
+                {
+                    searchCount++;
+                }
             }
 
             return searchCount > 0 ? TaskStatus.Success : TaskStatus.Failure;

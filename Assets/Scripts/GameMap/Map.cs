@@ -1,4 +1,5 @@
-﻿using StaticData;
+﻿using System.Collections.Generic;
+using StaticData;
 using UnityEngine;
 using Utils;
 
@@ -11,8 +12,9 @@ namespace GameMap
         private Vector2Int _min;
         private Vector2Int _max;
         private CellData[,] _cellData;
+        private readonly HashSet<Vector2Int> _miragePositions = new HashSet<Vector2Int>();
 
-        public ref CellData this[int x, int y] => ref _cellData[x, y];
+        public IReadOnlyCollection<Vector2Int> MiragePositions => _miragePositions;
 
         public void Init(GameSettings gameSettings)
         {
@@ -30,6 +32,32 @@ namespace GameMap
             DistributeMirage(gameSettings.MirageCount);
         }
 
+        public bool OpenCell(Vector2Int position)
+        {
+            ref var cell = ref _cellData[position.x, position.y];
+            if (cell.IsOpen)
+                return false;
+            cell.IsOpen = true;
+            if (cell.Mirage > 0)
+            {
+                _miragePositions.Add(position);
+            }
+            return true;
+        }
+
+        public int ExtractMirage(Vector2Int position)
+        {
+            ref var cell = ref _cellData[position.x, position.y];
+            var mirage = 0;
+            if (cell.IsOpen)
+            {
+                mirage = cell.Mirage;
+                cell.Mirage = 0;
+                _miragePositions.Remove(position);
+            }
+            return mirage;
+        }
+        
         public bool IsInBounds(int x, int y)
         {
             return x >= _min.x && x < _max.x &&

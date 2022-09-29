@@ -1,7 +1,6 @@
 ﻿using CleverCrow.Fluid.BTs.Trees;
 using Heroes;
 using Heroes.BtActions;
-using Services.FoundMirageService;
 using Services.HeroStorage;
 using Services.MapProvider;
 using Services.MirageService;
@@ -15,20 +14,17 @@ namespace Services.BtFactory
         private readonly IHeroStorage _heroStorage;
         private readonly IPointService _pointService;
         private readonly IMirageService _mirageService;
-        private readonly IFoundMirageService _foundMirageService;
 
         public BtFactory(
             IMapProvider mapProvider,
             IHeroStorage heroStorage, 
             IPointService pointService, 
-            IMirageService mirageService,
-            IFoundMirageService foundMirageService)
+            IMirageService mirageService)
         {
             _mapProvider = mapProvider;
             _heroStorage = heroStorage;
             _pointService = pointService;
             _mirageService = mirageService;
-            _foundMirageService = foundMirageService;
         }
 
         public BehaviorTree Create(Hero hero)
@@ -69,11 +65,11 @@ namespace Services.BtFactory
             builder
                 .Selector()
                     .Sequence()
-                        .AddNode(new IsMirageFound(_foundMirageService))
+                        .AddNode(new IsMirageFound(_mapProvider))
                         .Selector()
                             .AddNode(new CollectMirage(hero, _pointService, _mapProvider, _mirageService))
                             .Sequence()
-                                .AddNode(new SelectMirageTargetPosition(hero, _foundMirageService))
+                                .AddNode(new SelectMirageTargetPosition(hero, _mapProvider))
                                 .AddNode(new MoveToTargetPosition(hero))
                             .End()
                         .End()

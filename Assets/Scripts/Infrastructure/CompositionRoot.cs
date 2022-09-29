@@ -1,7 +1,6 @@
 ﻿using Services.BtFactory;
 using Services.CameraProvider;
 using Services.CoroutineRunner;
-using Services.FoundMirageService;
 using Services.HeroFactory;
 using Services.HeroStorage;
 using Services.MapProvider;
@@ -31,15 +30,13 @@ namespace Infrastructure
             var cameraProvider = new MainCameraProvider();
             var mapProvider = new MapProvider();
             var heroStorage = new HeroStorage();
-            var foundMirageService = new FoundMirageService();
             var mirageService = new MirageService(gameSettings);
             var pointService = new PointService(mapProvider);
             var btFactory = new BtFactory(
                 mapProvider,
                 heroStorage,
                 pointService,
-                mirageService,
-                foundMirageService);
+                mirageService);
             var uiFactory = new UiFactory(
                 prefabs,
                 gameSettings,

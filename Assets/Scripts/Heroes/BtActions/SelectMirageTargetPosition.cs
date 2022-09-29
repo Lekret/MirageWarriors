@@ -1,6 +1,6 @@
 ﻿using CleverCrow.Fluid.BTs.Tasks;
 using CleverCrow.Fluid.BTs.Tasks.Actions;
-using Services.FoundMirageService;
+using Services.MapProvider;
 using UnityEngine;
 
 namespace Heroes.BtActions
@@ -8,12 +8,12 @@ namespace Heroes.BtActions
     public class SelectMirageTargetPosition : ActionBase
     {
         private readonly Hero _hero;
-        private readonly IFoundMirageService _foundMirageService;
+        private readonly IMapProvider _mapProvider;
         
-        public SelectMirageTargetPosition(Hero hero, IFoundMirageService foundMirageService)
+        public SelectMirageTargetPosition(Hero hero, IMapProvider mapProvider)
         {
             _hero = hero;
-            _foundMirageService = foundMirageService;
+            _mapProvider = mapProvider;
             Name = nameof(SelectMirageTargetPosition);
         }
         
@@ -26,9 +26,10 @@ namespace Heroes.BtActions
 
         private Vector2 FindCloserMirage()
         {
+            var map = _mapProvider.GetMap();
             var closerPosition = new Vector2(float.MaxValue, float.MaxValue);
             var minSqrMag = 0f;
-            foreach (var position in _foundMirageService.GetPositions())
+            foreach (var position in map.MiragePositions)
             {
                 var newSqrMag = Vector2.SqrMagnitude(closerPosition - position);
                 if (newSqrMag < minSqrMag)

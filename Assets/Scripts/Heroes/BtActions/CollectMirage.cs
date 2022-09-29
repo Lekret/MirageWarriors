@@ -15,7 +15,7 @@ namespace Heroes.BtActions
         private readonly IMapProvider _mapProvider;
         private readonly IMirageService _mirageService;
         private readonly List<Vector2Int> _pointsBuffer = new List<Vector2Int>();
-
+        
         public CollectMirage(
             Hero hero, 
             IPointService pointService, 
@@ -40,12 +40,7 @@ namespace Heroes.BtActions
             {
                 if (collectedMirage >= collectLimit)
                     break;
-                ref var cell = ref map[point.x, point.y];
-                if (cell.IsOpen)
-                {
-                    collectedMirage += cell.Mirage;
-                    cell.Mirage = 0;
-                }
+                collectedMirage += map.ExtractMirage(point);
             }
 
             if (collectedMirage > 0)
