@@ -24,18 +24,18 @@ namespace Heroes.BtActions
             var miragePositions = map.MiragePositions;
             if (miragePositions.Count == 0)
                 return TaskStatus.Failure;
-            var closerMirage = FindCloserMirage(miragePositions);
+            var closerMirage = FindClosestMirage(miragePositions, _hero.transform.position);
             _hero.State.TargetPosition = closerMirage;
             return TaskStatus.Success;
         }
 
-        private static Vector2 FindCloserMirage(IEnumerable<Vector2Int> miragePositions)
+        private static Vector2 FindClosestMirage(IEnumerable<Vector2Int> miragePositions, Vector2 heroPosition)
         {
             var closerPosition = new Vector2(float.MaxValue, float.MaxValue);
             var minSqrMag = float.MaxValue;
             foreach (var position in miragePositions)
             {
-                var newSqrMag = Vector2.SqrMagnitude(closerPosition - position);
+                var newSqrMag = Vector2.SqrMagnitude(position - heroPosition);
                 if (newSqrMag < minSqrMag)
                 {
                     minSqrMag = newSqrMag;
