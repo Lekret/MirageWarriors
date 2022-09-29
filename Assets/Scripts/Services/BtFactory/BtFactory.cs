@@ -1,6 +1,7 @@
 ﻿using CleverCrow.Fluid.BTs.Trees;
 using Heroes;
 using Heroes.BtActions;
+using Services.FoundMirageService;
 using Services.HeroStorage;
 using Services.MapProvider;
 using Services.MirageService;
@@ -14,17 +15,20 @@ namespace Services.BtFactory
         private readonly IHeroStorage _heroStorage;
         private readonly IPointService _pointService;
         private readonly IMirageService _mirageService;
+        private readonly IFoundMirageService _foundMirageService;
 
         public BtFactory(
             IMapProvider mapProvider,
             IHeroStorage heroStorage, 
             IPointService pointService, 
-            IMirageService mirageService)
+            IMirageService mirageService,
+            IFoundMirageService foundMirageService)
         {
             _mapProvider = mapProvider;
             _heroStorage = heroStorage;
             _pointService = pointService;
             _mirageService = mirageService;
+            _foundMirageService = foundMirageService;
         }
 
         public BehaviorTree Create(Hero hero)
@@ -65,23 +69,20 @@ namespace Services.BtFactory
             builder
                 .Selector()
                     .Sequence()
-                        .AddNode(new IsMirageFound(_mapProvider))
+                        .AddNode(new IsMirageFound(_foundMirageService))
                         .Selector()
                             .AddNode(new CollectMirage(hero, _pointService, _mapProvider, _mirageService))
-                            .AddNode(new MoveToMirage())
+                            .Sequence()
+                                .AddNode(new SelectMirageTargetPosition(hero, _foundMirageService))
+                                .AddNode(new MoveToTargetPosition(hero))
+                            .End()
                         .End()
                     .End()
-                    .Sequence()
-                        .AddNode(new MoveToTargetPosition(hero))
-                        .AddNode(new IsTargetPositionReached(hero))
-                        .AddNode(new RemoveTargetPosition(hero))
-                    .End()
+                    .AddNode(new MoveToTargetPosition(hero))
                     .AddNode(new SearchMirage(hero, _pointService, _mapProvider))
                     .Sequence()
                         .AddNode(new FindMirageSearchPoint(hero, _mapProvider))
                         .AddNode(new MoveToTargetPosition(hero))
-                        .AddNode(new IsTargetPositionReached(hero))
-                        .AddNode(new RemoveTargetPosition(hero))
                     .End()
                 .End();
         }

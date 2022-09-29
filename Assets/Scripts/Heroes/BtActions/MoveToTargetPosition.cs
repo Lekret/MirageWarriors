@@ -21,11 +21,23 @@ namespace Heroes.BtActions
                 return TaskStatus.Failure;
             
             var transform = _hero.transform;
-            transform.position = Vector2.MoveTowards(
-                transform.position, 
-                targetPosition.Value, 
+            var newPosition = Vector2.MoveTowards(
+                transform.position,
+                targetPosition.Value,
                 _hero.Data.Speed * Time.deltaTime);
+            transform.position = newPosition;
+            
+            if (IsTargetPositionReached(newPosition, targetPosition.Value))
+            {
+                _hero.State.TargetPosition = null;
+            }
             return TaskStatus.Success;
+        }
+
+        private static bool IsTargetPositionReached(Vector2 newPosition, Vector2 targetPosition)
+        {
+            var diff = targetPosition - newPosition;
+            return diff.sqrMagnitude <= Vector2.kEpsilon;
         }
     }
 }

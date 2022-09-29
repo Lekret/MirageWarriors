@@ -1,23 +1,21 @@
 ﻿using CleverCrow.Fluid.BTs.Tasks;
-using Services.MapProvider;
+using Services.FoundMirageService;
 
 namespace Heroes.BtActions
 {
     public class IsMirageFound : ConditionBase
     {
-        private readonly IMapProvider _mapProvider;
+        private readonly IFoundMirageService _foundMirageService;
         
-        public IsMirageFound(IMapProvider mapProvider)
+        public IsMirageFound(IFoundMirageService foundMirageService)
         {
-            _mapProvider = mapProvider;
+            _foundMirageService = foundMirageService;
             Name = nameof(IsMirageFound);
         }
         
         protected override bool OnUpdate()
         {
-            var map = _mapProvider.GetMap();
-            
-            return false;
+            return _foundMirageService.GetPositions().Count > 0;
         }
     }
 }

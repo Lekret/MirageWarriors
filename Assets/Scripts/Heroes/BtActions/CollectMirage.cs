@@ -34,17 +34,15 @@ namespace Heroes.BtActions
             var map = _mapProvider.GetMap();
             _pointService.GetPointsAroundHero(_hero, _pointsBuffer);
             var collectLimit = _hero.Data.Collection;
-            var collectedCount = 0;
             var collectedMirage = 0;
             
             foreach (var point in _pointsBuffer)
             {
-                if (collectedCount >= collectLimit)
+                if (collectedMirage >= collectLimit)
                     break;
                 ref var cell = ref map[point.x, point.y];
                 if (cell.IsOpen)
                 {
-                    collectedCount++;
                     collectedMirage += cell.Mirage;
                     cell.Mirage = 0;
                 }
