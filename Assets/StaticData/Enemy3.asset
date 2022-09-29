@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy3
   m_EditorClassIdentifier: 
   Initiative: 10
-  ActionDiameter: 12
+  ActionDiameter: 50
   Enthusiasm: 7800
   Search: 500
   Speed: 100
