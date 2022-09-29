@@ -1,4 +1,5 @@
-﻿using CleverCrow.Fluid.BTs.Tasks;
+﻿using System.Collections.Generic;
+using CleverCrow.Fluid.BTs.Tasks;
 using CleverCrow.Fluid.BTs.Tasks.Actions;
 using Services.MapProvider;
 using UnityEngine;
@@ -19,17 +20,20 @@ namespace Heroes.BtActions
         
         protected override TaskStatus OnUpdate()
         {
-            var closerMirage = FindCloserMirage();
+            var map = _mapProvider.GetMap();
+            var miragePositions = map.MiragePositions;
+            if (miragePositions.Count == 0)
+                return TaskStatus.Failure;
+            var closerMirage = FindCloserMirage(miragePositions);
             _hero.State.TargetPosition = closerMirage;
             return TaskStatus.Success;
         }
 
-        private Vector2 FindCloserMirage()
+        private static Vector2 FindCloserMirage(IEnumerable<Vector2Int> miragePositions)
         {
-            var map = _mapProvider.GetMap();
             var closerPosition = new Vector2(float.MaxValue, float.MaxValue);
             var minSqrMag = 0f;
-            foreach (var position in map.MiragePositions)
+            foreach (var position in miragePositions)
             {
                 var newSqrMag = Vector2.SqrMagnitude(closerPosition - position);
                 if (newSqrMag < minSqrMag)
