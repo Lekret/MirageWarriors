@@ -16,7 +16,7 @@ namespace GameMap
 
         public IReadOnlyCollection<Vector2Int> MiragePositions => _miragePositions;
 
-        public void Init(GameSettings gameSettings)
+        private void Awake()
         {
             var bounds = _borders.bounds;
             _min = bounds.min.ToVec2Int();
@@ -29,6 +29,10 @@ namespace GameMap
                     _cellData[x, y] = new CellData(); 
                 }
             }
+        }
+
+        public void Init(GameSettings gameSettings)
+        {
             DistributeMirage(gameSettings.MirageCount);
         }
 

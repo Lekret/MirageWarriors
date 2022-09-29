@@ -20,7 +20,7 @@ namespace Infrastructure
         private ISceneLoader _sceneLoader;
         private GameStateMachine _stateMachine;
 
-        private void Awake()
+        private void Start()
         {
             DontDestroyOnLoad(this);
             var prefabs = Configuration.Prefabs;
