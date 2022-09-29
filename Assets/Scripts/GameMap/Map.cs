@@ -44,7 +44,7 @@ namespace GameMap
             {
                 var rndWidth = Random.Range(0, width);
                 var rndHeight = Random.Range(0, height);
-                var rndMirage = Random.Range(0, Mathf.Min(10, mirageCount));
+                var rndMirage = Mathf.Min(10, mirageCount);
                 _cellData[rndWidth, rndHeight].Mirage += rndMirage;
                 mirageCount -= rndMirage;
             }
