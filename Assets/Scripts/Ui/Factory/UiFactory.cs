@@ -42,7 +42,7 @@ namespace Ui.Factory
 
         public ProgressUi CreateProgress()
         {
-            var progressUi = Object.Instantiate(_prefabs.ProgressUi);
+            var progressUi = Object.Instantiate(_prefabs.ProgressUi, _uiRoot);
             progressUi.Init(_mirageService);
             return progressUi;
         }
