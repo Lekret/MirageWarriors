@@ -4,9 +4,9 @@ using Services.HeroFactory;
 using Services.HeroStorage;
 using Services.MapProvider;
 using Services.MirageService;
-using Services.Victory;
 using StaticData;
 using Ui.Factory;
+using UnityEngine;
 
 namespace StateMachine
 {
@@ -17,8 +17,10 @@ namespace StateMachine
         private readonly IHeroFactory _heroFactory;
         private readonly IMapProvider _mapProvider;
         private readonly IUiFactory _uiFactory;
-        private readonly IVictoryService _victoryService;
         private readonly IMirageService _mirageService;
+        private readonly IGameStateMachine _stateMachine;
+        private readonly List<Hero> _heroTickBuffer = new List<Hero>();
+        private readonly List<Hero> _heroCountBuffer = new List<Hero>();
         private int _heroSwitchCount;
 
         public GameState(
@@ -27,16 +29,16 @@ namespace StateMachine
             IHeroFactory heroFactory,
             IMapProvider mapProvider,
             IUiFactory uiFactory, 
-            IVictoryService victoryService, 
-            IMirageService mirageService)
+            IMirageService mirageService,
+            IGameStateMachine stateMachine)
         {
             _gameSettings = gameSettings;
             _heroStorage = heroStorage;
             _heroFactory = heroFactory;
             _mapProvider = mapProvider;
             _uiFactory = uiFactory;
-            _victoryService = victoryService;
             _mirageService = mirageService;
+            _stateMachine = stateMachine;
         }
 
         public void Enter(GameStateArgs args)
@@ -58,7 +60,7 @@ namespace StateMachine
         
         public void Tick()
         {
-            foreach (var hero in _heroStorage.GetAll())
+            foreach (var hero in _heroStorage.GetAll(_heroTickBuffer))
             {
                 hero.Bt.Tick();
             }
@@ -105,7 +107,7 @@ namespace StateMachine
 
         private void CheckVictoryByHeroCount()
         {
-            var heroes = _heroStorage.GetAll();
+            var heroes = _heroStorage.GetAll(_heroCountBuffer);
             var hasPlayer = false;
             var hasEnemy = false;
             foreach (var hero in heroes)
@@ -115,24 +117,36 @@ namespace StateMachine
                 else
                     hasEnemy = true;
             }
-            if (hasEnemy && !hasPlayer)
-                _victoryService.TriggerEnemy();
             if (hasPlayer && !hasEnemy)
-                _victoryService.TriggerPlayer();
+                TriggerPlayerWon();
+            if (hasEnemy && !hasPlayer)
+                TriggerEnemyWon();
         }
 
         private void OnPlayerMirageChanged(int mirage)
         {
             if (IsMirageAboveHalf(mirage))
-                _victoryService.TriggerPlayer();
+                TriggerPlayerWon();
         }
         
         private void OnEnemyMirageChanged(int mirage)
         {
             if (IsMirageAboveHalf(mirage))
-                _victoryService.TriggerEnemy();
+                TriggerEnemyWon();
         }
 
+        private void TriggerPlayerWon()
+        {
+            Debug.LogError("Player won");
+            _stateMachine.Enter<ResultState>();
+        }
+
+        private void TriggerEnemyWon()
+        {
+            Debug.LogError("Enemy won");
+            _stateMachine.Enter<ResultState>();
+        }
+        
         private bool IsMirageAboveHalf(int mirage)
         {
             return mirage > _gameSettings.MirageCount / 2f;

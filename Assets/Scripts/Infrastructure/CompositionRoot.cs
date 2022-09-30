@@ -7,7 +7,6 @@ using Services.MapProvider;
 using Services.MirageService;
 using Services.PointService;
 using Services.SceneLoader;
-using Services.Victory;
 using StateMachine;
 using StaticData;
 using Ui.Factory;
@@ -32,7 +31,6 @@ namespace Infrastructure
             var mapProvider = new MapProvider();
             var heroStorage = new HeroStorage();
             var mirageService = new MirageService();
-            var victoryService = new VictoryService(mirageService);
             var pointService = new PointService(mapProvider);
             var btFactory = new BtFactory(
                 mapProvider,
@@ -54,8 +52,8 @@ namespace Infrastructure
                 heroFactory, 
                 mapProvider,
                 uiFactory, 
-                victoryService, 
-                mirageService);
+                mirageService, 
+                _stateMachine);
             var resultState = new ResultState();
             _stateMachine
                 .AddState(setupState)

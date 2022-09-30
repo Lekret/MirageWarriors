@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Heroes;
 
 namespace Services.HeroStorage
@@ -6,7 +7,6 @@ namespace Services.HeroStorage
     public class HeroStorage : IHeroStorage
     {
         private readonly List<Hero> _heroes = new List<Hero>();
-        private readonly List<Hero> _readBuffer = new List<Hero>();
 
         public void Add(Hero hero)
         {
@@ -18,11 +18,16 @@ namespace Services.HeroStorage
             _heroes.Remove(hero);
         }
 
-        public IReadOnlyList<Hero> GetAll()
+        public List<Hero> GetAll()
         {
-            _readBuffer.Clear();
-            _readBuffer.AddRange(_heroes);
-            return _readBuffer;
+            return _heroes.ToList();
+        }
+
+        public List<Hero> GetAll(List<Hero> heroes)
+        {
+            heroes.Clear();
+            heroes.AddRange(_heroes);
+            return heroes;
         }
     }
 }
