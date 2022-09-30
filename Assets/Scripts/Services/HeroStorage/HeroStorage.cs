@@ -18,7 +18,7 @@ namespace Services.HeroStorage
             _heroes.Remove(hero);
         }
 
-        public IEnumerable<Hero> GetAll()
+        public IReadOnlyList<Hero> GetAll()
         {
             _readBuffer.Clear();
             _readBuffer.AddRange(_heroes);

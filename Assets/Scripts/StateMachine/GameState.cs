@@ -3,6 +3,8 @@ using Heroes;
 using Services.HeroFactory;
 using Services.HeroStorage;
 using Services.MapProvider;
+using Services.MirageService;
+using Services.Victory;
 using StaticData;
 using Ui.Factory;
 
@@ -15,6 +17,8 @@ namespace StateMachine
         private readonly IHeroFactory _heroFactory;
         private readonly IMapProvider _mapProvider;
         private readonly IUiFactory _uiFactory;
+        private readonly IVictoryService _victoryService;
+        private readonly IMirageService _mirageService;
         private int _heroSwitchCount;
 
         public GameState(
@@ -22,13 +26,17 @@ namespace StateMachine
             IHeroStorage heroStorage,
             IHeroFactory heroFactory,
             IMapProvider mapProvider,
-            IUiFactory uiFactory)
+            IUiFactory uiFactory, 
+            IVictoryService victoryService, 
+            IMirageService mirageService)
         {
             _gameSettings = gameSettings;
             _heroStorage = heroStorage;
             _heroFactory = heroFactory;
             _mapProvider = mapProvider;
             _uiFactory = uiFactory;
+            _victoryService = victoryService;
+            _mirageService = mirageService;
         }
 
         public void Enter(GameStateArgs args)
@@ -37,6 +45,15 @@ namespace StateMachine
             _mapProvider.GetMap().Init(_gameSettings);
             SpawnHeroes(args.SpawnData);
             _uiFactory.CreateProgress();
+            _mirageService.PlayerMirageChanged += OnPlayerMirageChanged;
+            _mirageService.EnemyMirageChanged += OnEnemyMirageChanged;
+        }
+
+        public void Exit()
+        {
+            DisposeHeroes();
+            _mirageService.PlayerMirageChanged -= OnPlayerMirageChanged;
+            _mirageService.EnemyMirageChanged -= OnEnemyMirageChanged;
         }
         
         public void Tick()
@@ -45,11 +62,6 @@ namespace StateMachine
             {
                 hero.Bt.Tick();
             }
-        }
-
-        public void Exit()
-        {
-            DisposeHeroes();
         }
         
         private void SpawnHeroes(IEnumerable<HeroSpawnData> spawnData)
@@ -79,6 +91,7 @@ namespace StateMachine
         {
             hero.Died -= OnHeroDied;
             _heroStorage.Remove(hero);
+            CheckVictoryByHeroCount();
         }
         
         private void SwitchHero(Hero hero)
@@ -88,6 +101,41 @@ namespace StateMachine
             hero.State.IsAggressive = !hero.State.IsAggressive;
             hero.State.Cooldown = hero.Data.Cooldown;
             _heroSwitchCount--;
+        }
+
+        private void CheckVictoryByHeroCount()
+        {
+            var heroes = _heroStorage.GetAll();
+            var hasPlayer = false;
+            var hasEnemy = false;
+            foreach (var hero in heroes)
+            {
+                if (hero.State.IsPlayer)
+                    hasPlayer = true;
+                else
+                    hasEnemy = true;
+            }
+            if (hasEnemy && !hasPlayer)
+                _victoryService.TriggerEnemy();
+            if (hasPlayer && !hasEnemy)
+                _victoryService.TriggerPlayer();
+        }
+
+        private void OnPlayerMirageChanged(int mirage)
+        {
+            if (IsMirageAboveHalf(mirage))
+                _victoryService.TriggerPlayer();
+        }
+        
+        private void OnEnemyMirageChanged(int mirage)
+        {
+            if (IsMirageAboveHalf(mirage))
+                _victoryService.TriggerEnemy();
+        }
+
+        private bool IsMirageAboveHalf(int mirage)
+        {
+            return mirage > _gameSettings.MirageCount / 2f;
         }
     }
 }

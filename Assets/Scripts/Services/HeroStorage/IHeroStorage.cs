@@ -7,6 +7,6 @@ namespace Services.HeroStorage
     {
         void Add(Hero hero);
         void Remove(Hero hero);
-        IEnumerable<Hero> GetAll();
+        IReadOnlyList<Hero> GetAll();
     }
 }

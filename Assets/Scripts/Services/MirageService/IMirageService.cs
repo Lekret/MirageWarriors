@@ -7,8 +7,7 @@ namespace Services.MirageService
     {
         event Action<int> PlayerMirageChanged;
         event Action<int> EnemyMirageChanged;
-        event Action PlayerWon;
-        event Action EnemyWon;
+
         void AddMirage(Hero hero, int mirage);
     }
 }
